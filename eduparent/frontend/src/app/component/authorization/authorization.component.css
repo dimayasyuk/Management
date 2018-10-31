@@ -1,0 +1,36 @@
+.font-weight-bold{
+  color: darkslategray;
+}
+.form-check-label{
+  color: darkslategray;
+}
+.button-with-padding{
+  color: white;
+  background-color: darkslategray;
+  margin-top: 10px;
+}
+.navbar{
+  background:darkcyan;
+}
+.navbar-brand{
+  color: #f4f4f4;
+}
+.header{
+  height:100vh;
+  background-image: url("image.jpg");
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.container{
+  padding-top: 200px;
+  margin: 0 !important;
+}
+
+.row{
+  margin-left: 40%;
+}
+

@@ -1,0 +1,31 @@
+.navbar{
+  background:darkcyan;
+}
+.nav-link , .navbar-brand{
+  color: #f4f4f4;
+}
+.nav-link{
+  margin-right: 1em !important;
+}
+.nav-link:hover{
+  font-weight : bold;
+  background: white;
+  color: darkslategrey;
+}
+.navbar-collapse{
+  justify-content: flex-end;
+}
+.navbar-toggler{
+  background:#fff !important;
+}
+.table thead th{
+  color: darkslategrey !important;
+  font-weight: normal !important;
+}
+.btn{
+  color: white;
+}
+.table tbody td{
+  color : darkslategray !important;
+  font-weight: bold;
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/SD-2_YasyukevichDmitry.iml" filepath="$PROJECT_DIR$/.idea/SD-2_YasyukevichDmitry.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eduparent/backend/backend.iml" filepath="$PROJECT_DIR$/eduparent/backend/backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eduparent/edu-parent.iml" filepath="$PROJECT_DIR$/eduparent/edu-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eduparent/fapi/fapi.iml" filepath="$PROJECT_DIR$/eduparent/fapi/fapi.iml" />
+    </modules>
+  </component>
+</project>

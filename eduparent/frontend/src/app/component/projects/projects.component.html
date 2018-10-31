@@ -1,0 +1,115 @@
+<ng4-loading-spinner></ng4-loading-spinner>
+<nav class="navbar navbar-expand-sm">
+		<span class="navbar-text font-weight-bold">
+			Projects
+		</span>
+</nav>
+<div class="top-button-container container-fluid">
+  <div class="col-sm-12">
+    <button type="button" class="btn btn-secondary button-with-padding">Edit</button>
+    <button type="button" class="btn btn-secondary button-with-padding">Assign</button>
+    <button type="button" class="btn btn-secondary button-with-padding">Start</button>
+    <button type="button" class="btn btn-secondary button-with-padding">Resolve</button>
+    <button type="button" class="btn btn-secondary button-with-padding">Ready for Test</button>
+    <button type="button" class="btn btn-secondary button-with-padding">ReOpen</button>
+    <button type="button" class="btn btn-secondary button-with-padding">Close</button>
+  </div>
+</div>
+<div class="container-fluid mt-1">
+  <label class="font-weight-bold label" style="align-items: flex-start;">Details</label>
+  <div class="row">
+    <div class="col-sm-3 ml-1">
+      <div class="input-group input-group-sm">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="priority">Priority</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="input-group input-group-sm mt-1">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="status">Status</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+    </div>
+    <div class="col-sm-3 offset-sm-3">
+      <div class="input-group input-group-sm">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="assigne">Assignee</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="input-group input-group-sm mt-1">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="reporter">Reporter</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="input-group input-group-sm mt-1">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="estimation">Estimation</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt-1">
+  <label class="font-weight-bold label" style="align-items: flex-start;">Description</label>
+  <div class="row">
+    <div class="col-sm-3 ml-1">
+      <textarea class="form-control mt-1" rows="5" id="description"></textarea>
+    </div>
+    <div class="col-sm-3 offset-sm-3">
+      <div class="input-group input-group-sm mt-1">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="created">Created</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="input-group input-group-sm mt-1">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="updated">Updated</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="input-group input-group-sm mt-1">
+        <div class="input-group-prepend">
+					<span
+
+            class="input-group-text" id="resolved">Resolved</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+      <div class="input-group input-group-sm mt-1">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="closed">Closed</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt-1">
+  <div class="row">
+    <div class="col-sm-10 ml-1">
+      <div class="form-group">
+        <label class="font-weight-bold label" for="attachment">Attachments:</label>
+        <textarea class="form-control" rows="4" id="attachment"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt-0 comments-container">
+  <div class="row" style="align-items: flex-end;">
+    <div class="col-sm-8 ml-1">
+      <div class="form-group">
+        <label class="font-weight-bold label" for="comment">Comments:</label>
+        <textarea class="form-control" rows="4" id="comment"></textarea>
+      </div>
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-outline-success btn-block" type="submit">Add Comment</button>
+    </div>
+  </div>
+</div>

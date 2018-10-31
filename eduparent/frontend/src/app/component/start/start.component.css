@@ -1,0 +1,54 @@
+.navbar{
+  background:darkcyan;
+}
+.nav-link , .navbar-brand{
+  color: #f4f4f4;
+}
+.nav-link{
+  margin-right: 1em !important;
+}
+.nav-link:hover{
+  font-weight : bold;
+  background: white;
+  color: darkslategrey;
+}
+.navbar-collapse{
+  justify-content: flex-end;
+}
+.navbar-toggler{
+  background:#fff !important;
+}
+.header{
+  height:100vh;
+  background-image: url("photo.jpg");
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+.overlay{
+  position: absolute;
+  min-height: 100%;
+  min-width: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(244, 244, 244, 0.79);
+}
+.description{
+  position: absolute;
+  top: 30%;
+  margin: auto;
+  padding: 2em;
+}
+.description h1{
+  color:#F97300 ;
+}
+.description h3{
+  color: darkcyan;
+}
+.description p{
+  position: absolute;
+  color: darkslategrey;
+  font-size: 20px;
+  width: 50%;
+  line-height: 1.5;
+}

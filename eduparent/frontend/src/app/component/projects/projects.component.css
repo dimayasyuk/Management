@@ -1,0 +1,43 @@
+.body-container {
+  margin-top: 20px;
+}
+.panel {
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  display: flex;
+  flex-direction: row;
+}
+.navbar-text{
+  color: #f4f4f4;
+}
+.top-button-container{
+  text-align: center;
+  margin-top: 5px;
+}
+.button-with-padding{
+  width: 135px;
+  height: 40px;
+  margin-right: 10px;
+}
+.comments-container .col-sm-2 {
+  vertical-align: bottom;
+  margin-bottom: 15px;
+}
+.navbar{
+  background:darkcyan;
+  height: 45px;
+}
+.btn{
+  color : white;
+  background-color: darkcyan;
+  height: 35px;
+}
+.btn:hover{
+  font-weight : bold;
+  background: white;
+  color: darkslategrey;
+}
+.label{
+  color: darkslategray;
+}

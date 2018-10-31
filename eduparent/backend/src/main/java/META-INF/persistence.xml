@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+
+    <persistence-unit name="NewPersistenceUnit">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <mapping-file>com/netcracker/edu/backend/model/AccountEntity.xml</mapping-file>
+        <mapping-file>com/netcracker/edu/backend/model/AttachmentsEntity.xml</mapping-file>
+        <mapping-file>com/netcracker/edu/backend/model/PriorityEntity.xml</mapping-file>
+        <mapping-file>com/netcracker/edu/backend/model/ProjectEntity.xml</mapping-file>
+        <mapping-file>com/netcracker/edu/backend/model/RoleEntity.xml</mapping-file>
+        <mapping-file>com/netcracker/edu/backend/model/StatusEntity.xml</mapping-file>
+        <mapping-file>com/netcracker/edu/backend/model/TaskEntity.xml</mapping-file>
+        <mapping-file>com/netcracker/edu/backend/model/UserEntity.xml</mapping-file>
+        <class>com.netcracker.edu.backend.model.AccountEntity</class>
+        <class>com.netcracker.edu.backend.model.AttachmentsEntity</class>
+        <class>com.netcracker.edu.backend.model.PriorityEntity</class>
+        <class>com.netcracker.edu.backend.model.ProjectEntity</class>
+        <class>com.netcracker.edu.backend.model.RoleEntity</class>
+        <class>com.netcracker.edu.backend.model.StatusEntity</class>
+        <class>com.netcracker.edu.backend.model.TaskEntity</class>
+        <class>com.netcracker.edu.backend.model.UserEntity</class>
+        <class>com.netcracker.edu.backend.model.Account</class>
+        <class>com.netcracker.edu.backend.model.Attachments</class>
+        <class>com.netcracker.edu.backend.model.Priority</class>
+        <class>com.netcracker.edu.backend.model.Project</class>
+        <class>com.netcracker.edu.backend.model.Role</class>
+        <class>com.netcracker.edu.backend.model.Status</class>
+        <class>com.netcracker.edu.backend.model.Task</class>
+        <class>com.netcracker.edu.backend.model.User</class>
+        <properties>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/education"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.connection.username" value=""/>
+            <property name="hibernate.connection.password" value=""/>
+            <property name="hibernate.archive.autodetection" value="class"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hbm2ddl.auto" value="update"/>
+        </properties>
+    </persistence-unit>
+</persistence>
