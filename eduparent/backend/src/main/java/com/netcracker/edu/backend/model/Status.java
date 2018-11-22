@@ -1,58 +1,47 @@
 package com.netcracker.edu.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
 public class Status {
-    private int id;
-    private String status;
-    @JsonIgnore
-    private Collection<Task> tasksById;
+    private long id;
+    private String name;
 
     @Id
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "status", nullable = false, length = 45)
-    public String getStatus() {
-        return status;
+    @Column(name = "name", nullable = false, length = 45)
+    public String getName() {
+        return name;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Status status1 = (Status) o;
-        return id == status1.id &&
-                Objects.equals(status, status1.status);
+        Status status = (Status) o;
+        return id == status.id &&
+                Objects.equals(name, status.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, status);
-    }
-
-    @OneToMany(mappedBy = "statusByStatusId")
-    public Collection<Task> getTasksById() {
-        return tasksById;
-    }
-
-    public void setTasksById(Collection<Task> tasksById) {
-        this.tasksById = tasksById;
+        return Objects.hash(id, name);
     }
 }

@@ -1,27 +1,24 @@
 package com.netcracker.edu.backend.model;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 public class Account {
-    private int id;
+    private long id;
     private String name;
     private String sname;
-    private String fname;
     private String email;
-    private Integer userId;
-    private User userByUserId;
-    private Collection<Task> tasksById;
+    private Long userId;
+    //private User user;
 
     @Id
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -46,16 +43,6 @@ public class Account {
     }
 
     @Basic
-    @Column(name = "fname", nullable = true, length = 45)
-    public String getFname() {
-        return fname;
-    }
-
-    public void setFname(String fname) {
-        this.fname = fname;
-    }
-
-    @Basic
     @Column(name = "email", nullable = true, length = 45)
     public String getEmail() {
         return email;
@@ -66,12 +53,12 @@ public class Account {
     }
 
     @Basic
-    @Column(name = "user_id", nullable = true,insertable = false,updatable = false)
-    public Integer getUserId() {
+    @Column(name = "user_id", nullable = true)
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -83,34 +70,22 @@ public class Account {
         return id == account.id &&
                 Objects.equals(name, account.name) &&
                 Objects.equals(sname, account.sname) &&
-                Objects.equals(fname, account.fname) &&
                 Objects.equals(email, account.email) &&
                 Objects.equals(userId, account.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, sname, fname, email, userId);
+        return Objects.hash(id, name, sname, email, userId);
     }
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    public User getUserByUserId() {
-        return userByUserId;
-    }
-
-    public void setUserByUserId(User userByUserId) {
-        this.userByUserId = userByUserId;
-    }
-
-
-    @OneToMany(mappedBy = "accountByAssignedId")
-    public Collection<Task> getTasksById() {
-        return tasksById;
-    }
-
-    public void setTasksById(Collection<Task> tasksById) {
-        this.tasksById = tasksById;
-    }
-
+//    @ManyToOne
+//    @JoinColumn(name = "user_id", referencedColumnName = "id")
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 }

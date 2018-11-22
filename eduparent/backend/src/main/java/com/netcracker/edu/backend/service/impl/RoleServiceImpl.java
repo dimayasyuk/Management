@@ -1,7 +1,6 @@
 package com.netcracker.edu.backend.service.impl;
 
 import com.netcracker.edu.backend.model.Role;
-import com.netcracker.edu.backend.repository.ProjectRepository;
 import com.netcracker.edu.backend.repository.RoleRepository;
 import com.netcracker.edu.backend.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;

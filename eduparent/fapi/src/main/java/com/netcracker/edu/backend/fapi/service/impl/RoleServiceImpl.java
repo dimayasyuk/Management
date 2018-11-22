@@ -17,7 +17,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public List<Role> getAllRoles() {
         RestTemplate restTemplate = new RestTemplate();
-        Role[] roles = restTemplate.getForObject(backendUrl + "/api/roles/all",Role[].class);
+        Role[] roles = restTemplate.getForObject(backendUrl + "/api/roles/all", Role[].class);
         return Arrays.asList(roles);
     }
 }

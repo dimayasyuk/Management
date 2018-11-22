@@ -7,13 +7,26 @@ import {Task} from "../../model/task";
   providedIn: 'root'
 })
 export class TaskService {
-  private baseUrl = '/api/tasks';
-  constructor(private http: HttpClient) { }
 
-  getTasks():Observable<Task[]>{
-    return this.http.get<Task[]>(`${this.baseUrl}`);
+  constructor(private http: HttpClient) {
   }
-  saveProject(task:Task): Observable<Task>{
-    return this.http.post<Task>(`${this.baseUrl}`,task);
+
+  getTasks(): Observable<Task[]> {
+    return this.http.get<Task[]>('/api/tasks');
+  }
+
+  saveTask(task: Task): Observable<Task> {
+    return this.http.post<Task>('/api/tasks', task);
+  }
+
+  getTasksByProjectId(projectId: number):Observable<Task[]>{
+    return this.http.get<Task[]>('/api/tasks/' + projectId);
+  }
+
+  deleteTask(taskId: number): Observable<void> {
+    return this.http.delete<void>('/api/tasks/' + taskId);
+  }
+  getTaskById(taskId: number):Observable<Task>{
+    return this.http.get<Task>('/api/tasks/id/' + taskId);
   }
 }

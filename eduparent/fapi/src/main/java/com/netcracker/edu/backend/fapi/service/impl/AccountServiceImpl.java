@@ -17,7 +17,13 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public List<Account> getAllAccounts() {
         RestTemplate restTemplate = new RestTemplate();
-        Account[] accounts = restTemplate.getForObject(backendUrl + "/api/all",Account[].class);
+        Account[] accounts = restTemplate.getForObject(backendUrl + "/api/accounts/all",Account[].class);
         return Arrays.asList(accounts);
+    }
+
+    @Override
+    public Account saveAccount(Account account) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.postForEntity(backendUrl + "/api/accounts",account,Account.class).getBody();
     }
 }

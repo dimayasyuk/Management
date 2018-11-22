@@ -16,7 +16,19 @@ public class UserServiceImpl implements UserService {
 
     public List<User> getAllUsers(){
         RestTemplate restTemplate = new RestTemplate();
-        User[] users = restTemplate.getForObject(backendUrl + "/api/all",User[].class);
+        User[] users = restTemplate.getForObject(backendUrl + "/api/users/all",User[].class);
         return Arrays.asList(users);
+    }
+
+    @Override
+    public User getUserByLogin(String login) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(backendUrl + "/api/users/" + login,User.class);
+    }
+
+    @Override
+    public User saveUser(User user) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.postForEntity(backendUrl + "/api/users",user,User.class).getBody();
     }
 }

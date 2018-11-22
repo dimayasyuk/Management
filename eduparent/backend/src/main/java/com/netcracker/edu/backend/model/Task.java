@@ -1,73 +1,38 @@
 package com.netcracker.edu.backend.model;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 public class Task {
-    private int id;
-    private int projectId;
-    private int assignedId;
-    private int createdId;
+    private long id;
     private String code;
-    private Timestamp created;
-    private Timestamp updated;
-    private Timestamp dueDate;
-    private int estimation;
+    private Date created;
+    private Date closed;
+    private Date updated;
+    private Date dueDate;
+    private Integer estimation;
     private String description;
-    private int statusId;
-    private int priorityId;
-    private Integer attachementId;
-    private Project projectByProjectId;
-    private Account accountByAssignedId;
-    private Account accountByCreatedId;
-    private Status statusByStatusId;
-    private Priority priorityByPriorityId;
-    private Attachments attachmentsByAttachementId;
+    private Account assignee;
+    private Account reporter;
+    private Status status;
+    private Priority priority;
+    private Long projectId;
 
     @Id
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "project_id", nullable = false,insertable = false,updatable = false)
-    public int getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
-    }
-
-    @Basic
-    @Column(name = "assigned_id", nullable = false,insertable = false,updatable = false)
-    public int getAssignedId() {
-        return assignedId;
-    }
-
-    public void setAssignedId(int assignedId) {
-        this.assignedId = assignedId;
-    }
-
-    @Basic
-    @Column(name = "created_id", nullable = false,insertable = false,updatable = false)
-    public int getCreatedId() {
-        return createdId;
-    }
-
-    public void setCreatedId(int createdId) {
-        this.createdId = createdId;
-    }
-
-    @Basic
-    @Column(name = "code", nullable = false, length = 45)
+    @Column(name = "code", nullable = true, length = 45)
     public String getCode() {
         return code;
     }
@@ -77,47 +42,57 @@ public class Task {
     }
 
     @Basic
-    @Column(name = "created", nullable = false)
-    public Timestamp getCreated() {
+    @Column(name = "created", nullable = true)
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(Timestamp created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 
     @Basic
-    @Column(name = "updated", nullable = false)
-    public Timestamp getUpdated() {
+    @Column(name = "closed", nullable = true)
+    public Date getClosed() {
+        return closed;
+    }
+
+    public void setClosed(Date closed) {
+        this.closed = closed;
+    }
+
+    @Basic
+    @Column(name = "updated", nullable = true)
+    public Date getUpdated() {
         return updated;
     }
 
-    public void setUpdated(Timestamp updated) {
+    public void setUpdated(Date updated) {
         this.updated = updated;
     }
 
     @Basic
-    @Column(name = "due_date", nullable = false)
-    public Timestamp getDueDate() {
+    @Column(name = "due_date", nullable = true)
+    public Date getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Timestamp dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 
     @Basic
-    @Column(name = "estimation", nullable = false)
-    public int getEstimation() {
+    @Column(name = "estimation", nullable = true)
+    public Integer getEstimation() {
         return estimation;
     }
 
-    public void setEstimation(int estimation) {
+    public void setEstimation(Integer estimation) {
         this.estimation = estimation;
     }
 
     @Basic
-    @Column(name = "description", nullable = false, length = -1)
+    @Column(name = "description", nullable = true, length = -1)
     public String getDescription() {
         return description;
     }
@@ -126,118 +101,72 @@ public class Task {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "status_id", nullable = false,insertable = false,updatable = false)
-    public int getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
-    }
-
-    @Basic
-    @Column(name = "priority_id", nullable = false,insertable = false,updatable = false)
-    public int getPriorityId() {
-        return priorityId;
-    }
-
-    public void setPriorityId(int priorityId) {
-        this.priorityId = priorityId;
-    }
-
-    @Basic
-    @Column(name = "attachement_id", nullable = true,insertable = false,updatable = false)
-    public Integer getAttachementId() {
-        return attachementId;
-    }
-
-    public void setAttachementId(Integer attachementId) {
-        this.attachementId = attachementId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
         return id == task.id &&
-                projectId == task.projectId &&
-                assignedId == task.assignedId &&
-                createdId == task.createdId &&
-                estimation == task.estimation &&
-                statusId == task.statusId &&
-                priorityId == task.priorityId &&
                 Objects.equals(code, task.code) &&
                 Objects.equals(created, task.created) &&
                 Objects.equals(updated, task.updated) &&
                 Objects.equals(dueDate, task.dueDate) &&
-                Objects.equals(description, task.description) &&
-                Objects.equals(attachementId, task.attachementId);
+                Objects.equals(estimation, task.estimation) &&
+                Objects.equals(description, task.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, projectId, assignedId, createdId, code, created, updated, dueDate, estimation, description, statusId, priorityId, attachementId);
+        return Objects.hash(id, code, created, updated, dueDate, estimation, description);
     }
 
     @ManyToOne
-    @JoinColumn(name = "project_id", referencedColumnName = "id", nullable = false)
-    public Project getProjectByProjectId() {
-        return projectByProjectId;
+    @JoinColumn(name = "assigned_id", referencedColumnName = "id")
+    public Account getAssignee() {
+        return assignee;
     }
 
-    public void setProjectByProjectId(Project projectByProjectId) {
-        this.projectByProjectId = projectByProjectId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "assigned_id", referencedColumnName = "id", nullable = false)
-    public Account getAccountByAssignedId() {
-        return accountByAssignedId;
-    }
-
-    public void setAccountByAssignedId(Account accountByAssignedId) {
-        this.accountByAssignedId = accountByAssignedId;
+    public void setAssignee(Account assignee) {
+        this.assignee = assignee;
     }
 
     @ManyToOne
-    @JoinColumn(name = "created_id", referencedColumnName = "id", nullable = false)
-    public Account getAccountByCreatedId() {
-        return accountByCreatedId;
+    @JoinColumn(name = "created_id", referencedColumnName = "id")
+    public Account getReporter() {
+        return reporter;
     }
 
-    public void setAccountByCreatedId(Account accountByCreatedId) {
-        this.accountByCreatedId = accountByCreatedId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "status_id", referencedColumnName = "id", nullable = false)
-    public Status getStatusByStatusId() {
-        return statusByStatusId;
-    }
-
-    public void setStatusByStatusId(Status statusByStatusId) {
-        this.statusByStatusId = statusByStatusId;
+    public void setReporter(Account reporter) {
+        this.reporter = reporter;
     }
 
     @ManyToOne
-    @JoinColumn(name = "priority_id", referencedColumnName = "id", nullable = false)
-    public Priority getPriorityByPriorityId() {
-        return priorityByPriorityId;
+    @JoinColumn(name = "status_id", referencedColumnName = "id")
+    public Status getStatus() {
+        return status;
     }
 
-    public void setPriorityByPriorityId(Priority priorityByPriorityId) {
-        this.priorityByPriorityId = priorityByPriorityId;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @ManyToOne
-    @JoinColumn(name = "attachement_id", referencedColumnName = "id")
-    public Attachments getAttachmentsByAttachementId() {
-        return attachmentsByAttachementId;
+    @JoinColumn(name = "priority_id", referencedColumnName = "id")
+    public Priority getPriority() {
+        return priority;
     }
 
-    public void setAttachmentsByAttachementId(Attachments attachmentsByAttachementId) {
-        this.attachmentsByAttachementId = attachmentsByAttachementId;
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    @Basic
+    @Column(name = "project_id", nullable = true)
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 }

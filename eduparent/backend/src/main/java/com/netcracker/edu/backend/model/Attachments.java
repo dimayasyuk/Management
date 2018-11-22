@@ -1,36 +1,45 @@
 package com.netcracker.edu.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
 public class Attachments {
-    private int id;
-    private String file;
-    @JsonIgnore
-    private Collection<Task> tasksById;
+    private long id;
+    private String name;
+    private Long taskId;
 
     @Id
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "file", nullable = true, length = -1)
-    public String getFile() {
-        return file;
+    @Column(name = "name", nullable = true, length = -1)
+    public String getName() {
+        return name;
     }
 
-    public void setFile(String file) {
-        this.file = file;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Basic
+    @Column(name = "task_id", nullable = true)
+    public Long getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
     }
 
     @Override
@@ -39,20 +48,12 @@ public class Attachments {
         if (o == null || getClass() != o.getClass()) return false;
         Attachments that = (Attachments) o;
         return id == that.id &&
-                Objects.equals(file, that.file);
+                Objects.equals(name, that.name) &&
+                Objects.equals(taskId, that.taskId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, file);
-    }
-
-    @OneToMany(mappedBy = "attachmentsByAttachementId")
-    public Collection<Task> getTasksById() {
-        return tasksById;
-    }
-
-    public void setTasksById(Collection<Task> tasksById) {
-        this.tasksById = tasksById;
+        return Objects.hash(id, name, taskId);
     }
 }

@@ -2,7 +2,6 @@ package com.netcracker.edu.backend.service.impl;
 
 import com.netcracker.edu.backend.model.Priority;
 import com.netcracker.edu.backend.repository.PriorityRepository;
-import com.netcracker.edu.backend.repository.ProjectRepository;
 import com.netcracker.edu.backend.service.PriorityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

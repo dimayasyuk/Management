@@ -2,22 +2,34 @@ package com.netcracker.edu.backend.fapi.controller;
 
 import com.netcracker.edu.backend.fapi.model.User;
 import com.netcracker.edu.backend.fapi.service.UserService;
-import com.netcracker.edu.backend.fapi.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/us")
+@RequestMapping("/api/users")
 public class UserController {
     @Autowired
     private UserService service;
 
-    @RequestMapping
+    @RequestMapping(value = "/all",method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers(){
         return ResponseEntity.ok(service.getAllUsers());
     }
+
+    @RequestMapping(value = "{login}",method = RequestMethod.GET)
+    public ResponseEntity<User> getUserByLogin(@PathVariable(name = "login") String login){
+        return ResponseEntity.ok(service.getUserByLogin(login));
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<User> saveAccount(@RequestBody User user){
+        if(user != null) {
+            return ResponseEntity.ok(service.saveUser(user));
+        }
+        return null;
+    }
+
 }

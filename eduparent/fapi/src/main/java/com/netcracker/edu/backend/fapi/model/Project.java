@@ -4,25 +4,25 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Project {
-    private int id;
+    private long id;
     private String code;
     private String description;
     private int createdId;
 
     public Project(){}
 
-    public Project(int id,String code,String description,int createdId){
+    public Project(long id,String code,String description,int createdId){
         this.id = id;
         this.code = code;
         this.description = description;
         this.createdId = createdId;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -21,7 +21,22 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public Task getTaskById(Long taskId) {
+        return repository.findTaskById(taskId);
+    }
+
+    @Override
     public Task saveTask(Task task) {
         return repository.save(task);
+    }
+
+    @Override
+    public Iterable<Task> getAllTasksByProject(Long projectId) {
+        return repository.findTasksByProjectId(projectId);
+    }
+
+    @Override
+    public void deleteTask(Long id) {
+        repository.deleteById(id);
     }
 }

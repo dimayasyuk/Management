@@ -1,37 +1,22 @@
 package com.netcracker.edu.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 public class Project {
-    private int id;
+    private long id;
     private String code;
     private String description;
-    private int createdId;
-    private Account accountByCreatedId;
-    @JsonIgnore
-    private Collection<Task> tasksById;
-
-    public Project(int id,String code,String description){
-        this.id = id;
-        this.code = code;
-        this.description = description;
-    }
-
-    public Project() {
-    }
+    private Account reporter;
 
     @Id
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -55,48 +40,28 @@ public class Project {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "created_id", nullable = true,insertable = false,updatable = false)
-    public int getCreatedId() {
-        return createdId;
-    }
-
-    public void setCreatedId(int createdId) {
-        this.createdId = createdId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Project project = (Project) o;
         return id == project.id &&
-                createdId == project.createdId &&
                 Objects.equals(code, project.code) &&
                 Objects.equals(description, project.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, code, description, createdId);
+        return Objects.hash(id, code, description);
     }
 
     @ManyToOne
     @JoinColumn(name = "created_id", referencedColumnName = "id", nullable = false)
-    public Account getAccountByCreatedId() {
-        return accountByCreatedId;
+    public Account getReporter() {
+        return reporter;
     }
 
-    public void setAccountByCreatedId(Account accountByCreatedId) {
-        this.accountByCreatedId = accountByCreatedId;
-    }
-
-    @OneToMany(mappedBy = "projectByProjectId")
-    public Collection<Task> getTasksById() {
-        return tasksById;
-    }
-
-    public void setTasksById(Collection<Task> tasksById) {
-        this.tasksById = tasksById;
+    public void setReporter(Account reporter) {
+        this.reporter = reporter;
     }
 }

@@ -1,25 +1,23 @@
 package com.netcracker.edu.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
 public class Role {
-    private int id;
+    private long id;
     private String name;
-    @JsonIgnore
-    private Collection<User> usersById;
 
     @Id
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -45,14 +43,5 @@ public class Role {
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
-    }
-
-    @OneToMany(mappedBy = "roleByRoleId")
-    public Collection<User> getUsersById() {
-        return usersById;
-    }
-
-    public void setUsersById(Collection<User> usersById) {
-        this.usersById = usersById;
     }
 }

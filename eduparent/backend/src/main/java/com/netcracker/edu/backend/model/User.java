@@ -1,26 +1,23 @@
 package com.netcracker.edu.backend.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.Collection;
+import java.math.BigInteger;
 import java.util.Objects;
 
 @Entity
 public class User {
-    private int id;
+    private long id;
     private String login;
     private String password;
-    private int roleId;//FIXME
-    private Role roleByRoleId;
+    private Role role;
 
     @Id
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -44,39 +41,28 @@ public class User {
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "role_id", nullable = false,insertable = false,updatable = false)
-    public int getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id &&
-                roleId == user.roleId &&
+        return Objects.equals(id, user.id) &&
                 Objects.equals(login, user.login) &&
                 Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, roleId);
+        return Objects.hash(id, login, password);
     }
 
     @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
-    public Role getRoleByRoleId() {
-        return roleByRoleId;
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleByRoleId(Role roleByRoleId) {
-        this.roleByRoleId = roleByRoleId;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

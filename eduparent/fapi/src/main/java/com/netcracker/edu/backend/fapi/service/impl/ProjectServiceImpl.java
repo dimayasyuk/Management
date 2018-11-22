@@ -26,4 +26,16 @@ public class ProjectServiceImpl implements ProjectService {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.postForEntity(backendUrl + "/api/projects",project,Project.class).getBody();
     }
+
+    @Override
+    public Project findProjectById(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(backendUrl + "/api/projects/" + id, Project.class);
+    }
+
+    @Override
+    public void deleteProject(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.delete(backendUrl + "/api/projects/" + id);
+    }
 }

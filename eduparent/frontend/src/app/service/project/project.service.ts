@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Project} from "../../model/project";
@@ -7,13 +7,22 @@ import {Project} from "../../model/project";
   providedIn: 'root'
 })
 export class ProjectService {
-  private baseUrl = 'http://localhost:8081/api/projects';
-  constructor(private http: HttpClient) { }
-
-  getProjects():Observable<Project[]>{
-    return this.http.get<Project[]>(`${this.baseUrl}`);
+  constructor(private http: HttpClient) {
   }
-  saveProject(project:Project): Observable<Project>{
-    return this.http.post<Project>(`${this.baseUrl}`,project);
+
+  getProjects(): Observable<Project[]> {
+    return this.http.get<Project[]>('/api/projects');
+  }
+
+  getProjectById(id: number): Observable<Project> {
+    return this.http.get<Project>('/api/projects/' + id);
+  }
+
+  saveProject(project: Project): Observable<Project> {
+    return this.http.post<Project>('/api/projects', project);
+  }
+
+  deleteProject(projectId: number): Observable<void> {
+    return this.http.delete<void>('/api/projects/' + projectId);
   }
 }

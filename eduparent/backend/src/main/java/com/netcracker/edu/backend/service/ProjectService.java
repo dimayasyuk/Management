@@ -5,4 +5,6 @@ import com.netcracker.edu.backend.model.Project;
 public interface ProjectService {
     Iterable<Project> getAllProjects();
     Project saveProject(Project project);
+    Project findProjectById(Long id);
+    void deleteProject(Long id);
 }

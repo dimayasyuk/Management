@@ -24,4 +24,14 @@ public class ProjectServiceImpl implements ProjectService {
     public Project saveProject(Project project) {
         return repository.save(project);
     }
+
+    @Override
+    public Project findProjectById(Long id) {
+        return repository.findProjectById(id);
+    }
+
+    @Override
+    public void deleteProject(Long id) {
+        repository.deleteById(id);
+    }
 }
