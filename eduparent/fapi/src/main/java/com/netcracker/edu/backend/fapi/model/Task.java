@@ -18,12 +18,17 @@ public class Task {
     private Account assignee;
     private Account reporter;
     private Status status;
+    private long priorityId;
+    private long assignedId;
+    private long statusId;
     private Priority priority;
     private Long projectId;
 
     public Task(){}
 
-    public Task(long id, String code, Date created, Date closed, Date updated, Date dueDate, Integer estimation, String description, Account assignee, Account reporter, Status status, Priority priority, Long projectId) {
+    public Task(long id, String code, Date created, Date closed, Date updated, Date dueDate,
+                Integer estimation, String description, Account assignee, Account reporter,
+                Status status, Priority priority, Long projectId, Long priorityId,Long assignedId,Long statusId) {
         this.id = id;
         this.code = code;
         this.created = created;
@@ -37,6 +42,25 @@ public class Task {
         this.status = status;
         this.priority = priority;
         this.projectId = projectId;
+        this.priorityId = priorityId;
+        this.assignedId = assignedId;
+        this.statusId = statusId;
+    }
+
+    public long getAssignedId() {
+        return assignedId;
+    }
+
+    public void setAssignedId(long assignedId) {
+        this.assignedId = assignedId;
+    }
+
+    public long getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(long statusId) {
+        this.statusId = statusId;
     }
 
     public long getId() {
@@ -125,6 +149,14 @@ public class Task {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public long getPriorityId() {
+        return priorityId;
+    }
+
+    public void setPriorityId(long priorityId) {
+        this.priorityId = priorityId;
     }
 
     public Priority getPriority() {

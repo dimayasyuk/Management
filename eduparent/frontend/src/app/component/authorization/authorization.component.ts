@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
+import {AuthService} from "../../service/auth/auth.service";
+import {TokenStorageService} from "../../service/token/token.storage.service";
 
 @Component({
   selector: 'app-authorization',
@@ -7,7 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthorizationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private authService: AuthService, private token: TokenStorageService) {
+  }
+
+  username: string;
+  password: string;
+  login(): void {
+    this.authService.attemptAuth(this.username, this.password).subscribe(
+      data => {
+        this.token.saveToken(data.token);
+        this.router.navigate(['projects']);
+      }
+    );
+  }
+
 
   ngOnInit() {
   }

@@ -18,6 +18,9 @@ public class Task {
     private Account assignee;
     private Account reporter;
     private Status status;
+    private long priorityId;
+    private long statusId;
+    private long assignedId;
     private Priority priority;
     private Long projectId;
 
@@ -32,7 +35,7 @@ public class Task {
     }
 
     @Basic
-    @Column(name = "code", nullable = true, length = 45)
+    @Column(name = "code")
     public String getCode() {
         return code;
     }
@@ -42,7 +45,7 @@ public class Task {
     }
 
     @Basic
-    @Column(name = "created", nullable = true)
+    @Column(name = "created")
     public Date getCreated() {
         return created;
     }
@@ -52,7 +55,7 @@ public class Task {
     }
 
     @Basic
-    @Column(name = "closed", nullable = true)
+    @Column(name = "closed")
     public Date getClosed() {
         return closed;
     }
@@ -62,7 +65,7 @@ public class Task {
     }
 
     @Basic
-    @Column(name = "updated", nullable = true)
+    @Column(name = "updated")
     public Date getUpdated() {
         return updated;
     }
@@ -72,7 +75,7 @@ public class Task {
     }
 
     @Basic
-    @Column(name = "due_date", nullable = true)
+    @Column(name = "due_date")
     public Date getDueDate() {
         return dueDate;
     }
@@ -82,7 +85,7 @@ public class Task {
     }
 
     @Basic
-    @Column(name = "estimation", nullable = true)
+    @Column(name = "estimation")
     public Integer getEstimation() {
         return estimation;
     }
@@ -92,13 +95,43 @@ public class Task {
     }
 
     @Basic
-    @Column(name = "description", nullable = true, length = -1)
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Basic
+    @Column(name = "priority_id")
+    public long getPriorityId() {
+        return priorityId;
+    }
+
+    public void setPriorityId(long priorityId) {
+        this.priorityId = priorityId;
+    }
+
+    @Basic
+    @Column(name = "status_id")
+    public long getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(long statusId) {
+        this.statusId = statusId;
+    }
+
+    @Basic
+    @Column(name = "assigned_id")
+    public long getAssignedId() {
+        return assignedId;
+    }
+
+    public void setAssignedId(long assignedId) {
+        this.assignedId = assignedId;
     }
 
     @Override
@@ -121,7 +154,7 @@ public class Task {
     }
 
     @ManyToOne
-    @JoinColumn(name = "assigned_id", referencedColumnName = "id")
+    @JoinColumn(name = "assigned_id", referencedColumnName = "id",insertable = false,updatable = false)
     public Account getAssignee() {
         return assignee;
     }
@@ -141,7 +174,7 @@ public class Task {
     }
 
     @ManyToOne
-    @JoinColumn(name = "status_id", referencedColumnName = "id")
+    @JoinColumn(name = "status_id", referencedColumnName = "id",insertable = false,updatable = false)
     public Status getStatus() {
         return status;
     }
@@ -151,7 +184,7 @@ public class Task {
     }
 
     @ManyToOne
-    @JoinColumn(name = "priority_id", referencedColumnName = "id")
+    @JoinColumn(name = "priority_id", referencedColumnName = "id",insertable = false,updatable = false)
     public Priority getPriority() {
         return priority;
     }
@@ -161,7 +194,7 @@ public class Task {
     }
 
     @Basic
-    @Column(name = "project_id", nullable = true)
+    @Column(name = "project_id")
     public Long getProjectId() {
         return projectId;
     }

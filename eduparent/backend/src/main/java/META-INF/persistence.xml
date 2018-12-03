@@ -27,6 +27,7 @@
         <class>com.netcracker.edu.backend.model.Status</class>
         <class>com.netcracker.edu.backend.model.Task</class>
         <class>com.netcracker.edu.backend.model.User</class>
+        <class>com.netcracker.edu.backend.model.Comment</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/education"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>

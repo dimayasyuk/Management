@@ -15,6 +15,9 @@ export class Task {
   description: string;
   estimation: number;
   status: Status;
+  priorityId: number;
+  statusId: number;
+  assignedId: number;
   priority: Priority;
 }
 

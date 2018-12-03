@@ -7,10 +7,9 @@ import {Role} from "../../model/role";
   providedIn: 'root'
 })
 export class RoleService {
-  private baseUrl = 'http://localhost:8081/api/roles';
   constructor(private http: HttpClient) { }
 
   getRoles():Observable<Role[]>{
-    return this.http.get<Role[]>(`${this.baseUrl}`);
+    return this.http.get<Role[]>('/api/roles');
   }
 }

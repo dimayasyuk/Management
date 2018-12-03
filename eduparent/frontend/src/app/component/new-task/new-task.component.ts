@@ -48,7 +48,7 @@ export class NewTaskComponent implements OnInit {
     this.loadingService.show();
     this.editTask.created = new Date().getTime();
     this.editTask.updated = new Date().getTime();
-    this.editTask.status = this.statuses[0];
+    this.editTask.statusId = this.statuses[0].id;
     this.editTask.projectId = this.project.id;
     this.editTask.code = this.project.code;
 

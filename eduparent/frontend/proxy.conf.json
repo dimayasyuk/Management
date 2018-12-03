@@ -3,7 +3,7 @@
     "target": {
       "host": "localhost",
       "protocol": "http:",
-      "port": 8081
+      "port": 8086
     },
     "secure": false,
     "logLevel": "info"

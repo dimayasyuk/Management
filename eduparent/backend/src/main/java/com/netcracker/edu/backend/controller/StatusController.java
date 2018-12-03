@@ -3,6 +3,7 @@ package com.netcracker.edu.backend.controller;
 import com.netcracker.edu.backend.model.Status;
 import com.netcracker.edu.backend.service.StatusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,5 +21,10 @@ public class StatusController {
     @RequestMapping(value = "/all",method = RequestMethod.GET)
     public Iterable<Status> findAll() {
         return service.getAllStatusies();
+    }
+
+    @RequestMapping(value = "{name}",method = RequestMethod.GET)
+    public Status getStatusByName(@PathVariable(name = "name") String name) {
+        return service.getStatusByName(name);
     }
 }

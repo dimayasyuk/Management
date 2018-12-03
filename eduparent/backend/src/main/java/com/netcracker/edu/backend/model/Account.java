@@ -1,6 +1,7 @@
 package com.netcracker.edu.backend.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -10,7 +11,6 @@ public class Account {
     private String sname;
     private String email;
     private Long userId;
-    //private User user;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -79,13 +79,4 @@ public class Account {
         return Objects.hash(id, name, sname, email, userId);
     }
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id", referencedColumnName = "id")
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
 }

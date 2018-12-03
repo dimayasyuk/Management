@@ -7,12 +7,11 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class PriorityService {
-  private baseUrl = 'http://localhost:8081/api/priority';
 
   constructor(private http: HttpClient) {
   }
 
   getPriorities(): Observable<Priority[]> {
-    return this.http.get<Priority[]>(`${this.baseUrl}`);
+    return this.http.get<Priority[]>('/api/priority');
   }
 }

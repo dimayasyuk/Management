@@ -19,4 +19,9 @@ public class StatusServiceImpl implements StatusService {
     public Iterable<Status> getAllStatusies() {
         return repository.findAll();
     }
+
+    @Override
+    public Status getStatusByName(String name) {
+        return repository.findStatusByName(name);
+    }
 }

@@ -9,7 +9,15 @@
   flex-direction: row;
 }
 .navbar-text{
-  color: #f4f4f4;
+  color: white!important;
+}
+.but{
+  border:0;
+  background-color: initial;
+}
+.img{
+  width: 20px;
+  height: 20px;
 }
 .top-button-container{
   text-align: center;

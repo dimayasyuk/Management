@@ -3,7 +3,10 @@ package com.netcracker.edu.backend.controller;
 import com.netcracker.edu.backend.model.User;
 import com.netcracker.edu.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 @RestController
@@ -33,6 +36,16 @@ public class UserController {
             userService.saveUser(user);
         }
         return null;
+    }
+
+
+    @RequestMapping(value = "/login/{username}", method = RequestMethod.GET)
+    public ResponseEntity<User> findByUsername(@PathVariable(name = "username") String login) {
+        User user = userService.getUserByLogin(login);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        }
+        return ResponseEntity.notFound().build();
     }
 
 }

@@ -11,6 +11,15 @@ public class Attachments {
     private long id;
     private String name;
     private Long taskId;
+    private String path;
+
+    public Attachments(){}
+
+    public Attachments(String name,Long taskId,String path){
+        this.name = name;
+        this.taskId = taskId;
+        this.path = path;
+    }
 
     @Id
     @Column(name = "id", nullable = false)
@@ -55,5 +64,15 @@ public class Attachments {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, taskId);
+    }
+
+    @Basic
+    @Column(name = "path", nullable = true, length = -1)
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

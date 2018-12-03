@@ -1,118 +1,210 @@
 <ng4-loading-spinner></ng4-loading-spinner>
-<nav class="navbar navbar-expand-sm">
-		<span class="navbar-text font-weight-bold" [routerLink]="['/tasks', editTask.projectId]">
-			{{editTask.code}}
-		</span>
-</nav>
-<div class="top-button-container container-fluid">
-  <div class="col-sm-12">
-    <button type="button" class="btn btn-secondary button-with-padding">Edit</button>
-    <button type="button" class="btn btn-secondary button-with-padding">Assign</button>
-    <button type="button" class="btn btn-secondary button-with-padding">Start</button>
-    <button type="button" class="btn btn-secondary button-with-padding">Resolve</button>
-    <button type="button" class="btn btn-secondary button-with-padding">Ready for Test</button>
-    <button type="button" class="btn btn-secondary button-with-padding">ReOpen</button>
-    <button type="button" class="btn btn-secondary button-with-padding">Close</button>
-  </div>
-</div>
-<div class="container-fluid mt-1">
-  <label class="font-weight-bold label" style="align-items: flex-start;">Details</label>
-  <div class="row">
-    <div class="col-sm-3 ml-1">
-      <div class="input-group input-group-sm">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="priority">Priority</span>
-        </div>
-        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-               value="{{editTask.priority.name}}" disabled>
+<div *ngIf="editTask">
+  <nav class="navbar navbar-expand-sm">
+    <a class="navbar-brand navbar-text font-weight-bold" href="#" [routerLink]="['/tasks', editTask.projectId]"
+       target="_blank">
+      {{editTask.code}}
+    </a>
+
+    <ng-container>
+      <div class="container">
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Active</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" (click)="$event.preventDefault();" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Separated link</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+        </ul>
       </div>
-      <div class="input-group input-group-sm mt-1">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="status">Status</span>
+
+    </ng-container>
+    <!--<ul class="navbar-nav mr-auto">-->
+      <!--<li>-->
+        <!--<select class="form-control">-->
+          <!--<option (click)="updateStatusTask('Open');">ReOpen</option>-->
+          <!--<option (click)="updateStatusTask('Ready for Test');">Ready for Test</option>-->
+          <!--<option (click)="updateStatusTask('Closed');">Closed</option>-->
+        <!--</select>-->
+      <!--</li>-->
+    <!--</ul>-->
+    <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
+      <!--<span class="navbar-toggler-icon"></span>-->
+    <!--</button>-->
+    <!--<div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+      <!--<ul class="navbar-nav mr-auto">-->
+        <!--<li class="nav-item dropdown">-->
+          <!--<a class="nav-link dropdown-toggle" href="#" (click)="$event.preventDefault();" id="navbarDropdown"-->
+             <!--data-toggle="dropdown"-->
+             <!--aria-haspopup="true" aria-expanded="false">-->
+            <!--Actions-->
+          <!--</a>-->
+          <!--<div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+            <!--<a class="dropdown-item nav-link" href="#"-->
+               <!--(click)="$event.preventDefault(); updateStatusTask('Ready for Test');">Ready-->
+              <!--for Test</a>-->
+            <!--<a class="dropdown-item nav-link" href="#" (click)="$event.preventDefault(); updateStatusTask('Open');">ReOpen</a>-->
+            <!--<a class="dropdown-item nav-link" href="#" (click)="$event.preventDefault(); updateStatusTask('Closed');">Close</a>-->
+          <!--</div>-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</div>-->
+
+    <!--<div class="dropdown-divider"></div>-->
+  </nav>
+  <div class="container-fluid mt-1">
+    <label class="font-weight-bold label" style="align-items: flex-start;">Details</label>
+    <div class="row">
+      <div class="col-sm-3 ml-1">
+        <div class="input-group input-group-sm">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="priority">Priority</span>
+          </div>
+          <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                 value="{{editTask.priority.name}}" disabled>
         </div>
-        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-               value="{{editTask.status.name}}" disabled>
+        <div class="input-group input-group-sm mt-1">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="status">Status</span>
+          </div>
+          <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                 value="{{editTask.status.name}}" disabled>
+        </div>
+      </div>
+      <div class="col-sm-3 offset-sm-3">
+        <div class="input-group input-group-sm">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="assigne">Assignee</span>
+          </div>
+          <input type="text" id="input" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                 value="{{editTask.assignee.name}} {{editTask.assignee.sname}}" disabled>
+          <button for="input" (click)="openModal(assign)">Assign</button>
+        </div>
+        <div class="input-group input-group-sm mt-1">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="reporter">Reporter</span>
+          </div>
+          <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                 value="" disabled>
+        </div>
+        <div class="input-group input-group-sm mt-1">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="estimation">Estimation</span>
+          </div>
+          <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                 [ngModel]="editTask.estimation" disabled>
+        </div>
       </div>
     </div>
-    <div class="col-sm-3 offset-sm-3">
-      <div class="input-group input-group-sm">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="assigne">Assignee</span>
-        </div>
-        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-               value="{{editTask.assignee.name}} {{editTask.assignee.sname}}" disabled>
-      </div>
-      <div class="input-group input-group-sm mt-1">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="reporter">Reporter</span>
-        </div>
-        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-               value="" disabled>
-      </div>
-      <div class="input-group input-group-sm mt-1">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="estimation">Estimation</span>
-        </div>
-        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-               [ngModel]="editTask.estimation" disabled>
-      </div>
-    </div>
   </div>
-</div>
-<div class="container-fluid mt-1">
-  <label class="font-weight-bold label" style="align-items: flex-start;">Description</label>
-  <div class="row">
-    <div class="col-sm-3 ml-1">
+  <div class="container-fluid mt-1">
+    <label class="font-weight-bold label" style="align-items: flex-start;">Description</label>
+    <div class="row">
+      <div class="col-sm-3 ml-1">
       <textarea class="form-control mt-1" rows="5" id="description" [ngModel]="editTask.description"
                 disabled></textarea>
+      </div>
+      <div class="col-sm-3 offset-sm-3">
+        <div class="input-group input-group-sm mt-1">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="created">Created</span>
+          </div>
+          <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                 [ngModel]="editTask.created" disabled>
+        </div>
+        <div class="input-group input-group-sm mt-1">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="updated">Updated</span>
+          </div>
+          <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                 [ngModel]="editTask.updated" disabled>
+        </div>
+        <div *ngIf="editTask.closed" class="input-group input-group-sm mt-1">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="closed">Closed</span>
+          </div>
+          <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                 [ngModel]="editTask.closed" disabled>
+        </div>
+      </div>
     </div>
-    <div class="col-sm-3 offset-sm-3">
-      <div class="input-group input-group-sm mt-1">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="created">Created</span>
+  </div>
+  <div class="container-fluid mt-1">
+    <div class="row">
+      <div class="col-sm-10 ml-1">
+        <div class="form-group">
+          <label class="font-weight-bold label">Attachments:</label>
+          <div *ngIf="attachments">
+            <ul>
+              <li *ngFor="let key of attachments">
+                <a href="#" (click)="$event.preventDefault(); dowload(key)">{{key.name}}</a>
+                <button class="but" (click)="deleteAttachment(key)">
+                  <img src="./assets/recycle.png" class="img" alt="" style="vertical-align:middle">
+                </button>
+              </li>
+            </ul>
+          </div>
+          <input type="file" (change)="selectFile($event)" multiple>
+          <button class="btn btn-success" (click)="upload()">Upload</button>
         </div>
-        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-               [ngModel]="editTask.created" disabled>
       </div>
-      <div class="input-group input-group-sm mt-1">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="updated">Updated</span>
-        </div>
-        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-               [ngModel]="editTask.updated" disabled>
+    </div>
+  </div>
+  <div class="container-fluid mt-0 comments-container">
+    <label class="font-weight-bold label">Comments:</label>
+    <div class="media border p-3" *ngFor="let key of comments">
+      <img src="./assets/user.png" class="mr-3 mt-3 rounded-circle" style="width:60px;">
+      <div class="media-body">
+        <h4>
+          <small><i>Posted on {{key.posted}}</i></small>
+        </h4>
+        <p>{{key.comment}}</p>
       </div>
-      <div class="input-group input-group-sm mt-1">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="closed">Closed</span>
+    </div>
+    <div class="row" style="align-items: flex-end;">
+      <div class="col-sm-8 ml-1">
+        <div class="form-group">
+          <textarea [(ngModel)]="comment.comment" rows="4"></textarea>
         </div>
-        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-               [ngModel]="editTask.closed" disabled>
+      </div>
+      <div class="col-sm-1">
+        <button class="btn btn-outline-success btn-block" (click)="saveComment()">Add Comment</button>
       </div>
     </div>
   </div>
 </div>
-<div class="container-fluid mt-1">
-  <div class="row">
-    <div class="col-sm-10 ml-1">
-      <div class="form-group">
-        <label class="font-weight-bold label" for="attachment">Attachments:</label>
-        <textarea class="form-control" rows="4" id="attachment"></textarea>
-        <input type="file" class="form-control" id="file" (change)="selectFile($event)" multiple>
-        <button type="submit" class="btn btn-success" (click)="upload()">Upload</button>
-      </div>
+
+<ng-template #assign>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Assigne</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="form-group">
+      <label>Assignee</label>
+      <select class="form-control" [(ngModel)]="editTask.assignedId">
+        <option *ngFor="let key of accounts" [ngValue]="key.id">{{key.name}} {{key.sname}}</option>
+      </select>
     </div>
   </div>
-</div>
-<div class="container-fluid mt-0 comments-container">
-  <div class="row" style="align-items: flex-end;">
-    <div class="col-sm-8 ml-1">
-      <div class="form-group">
-        <label class="font-weight-bold label" for="comment">Comments:</label>
-        <textarea class="form-control" rows="4" id="comment"></textarea>
-      </div>
-    </div>
-    <div class="col-sm-2">
-      <button class="btn btn-outline-success btn-block" type="submit">Add Comment</button>
-    </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="reAssigne()">Assigne</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
   </div>
-</div>
+</ng-template>

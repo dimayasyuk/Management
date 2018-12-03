@@ -6,7 +6,6 @@ import {User} from "../../model/user";
 import {AccountService} from "../../service/account/account.service";
 import {UserService} from "../../service/user/user.service";
 import {Account} from "../../model/account";
-import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-new-user',
@@ -18,7 +17,6 @@ export class NewUserComponent implements OnInit {
   @Input()
   public modalRef;
   public roles: Role[];
-  public role: Role;
   public user: User;
   public account: Account;
 

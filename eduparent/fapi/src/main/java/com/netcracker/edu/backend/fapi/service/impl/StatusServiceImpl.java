@@ -21,4 +21,11 @@ public class StatusServiceImpl implements StatusService {
         Status[] statuses = restTemplate.getForObject(backendUrl + "/api/status/all",Status[].class);
         return Arrays.asList(statuses);
     }
+
+    @Override
+    public Status getStatusByName(String name) {
+        RestTemplate restTemplate = new RestTemplate();
+        Status status = restTemplate.getForObject(backendUrl + "/api/status/" + name, Status.class);
+        return status;
+    }
 }

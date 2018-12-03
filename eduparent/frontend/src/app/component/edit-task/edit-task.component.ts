@@ -33,6 +33,7 @@ export class EditTaskComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadTaskById();
     this.loadPriorities();
     this.loadAccounts();
     this.loadStatus();
@@ -42,20 +43,22 @@ export class EditTaskComponent implements OnInit {
     this.modalRef.hide();
   }
 
-  loadTaskById():void{
+  loadTaskById(): void {
     this.taskService.getTaskById(this.id).subscribe(
-      task =>{
+      task => {
         this.editTask = task;
+        console.log(this.editTask);
       }
     )
   }
 
   updateTask(): void {
-    this.loadingService.show();
     this.editTask.updated = new Date().getTime();
+    this.editTask.priority = null;
+    this.editTask.status = null;
+    this.editTask.assignee = null;
     this.taskService.saveTask(this.editTask).subscribe(
       () => {
-        this.loadingService.hide();
         this.taskComponent.updateTasks();
         this.closeModal();
         this.refreshTask();
