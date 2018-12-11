@@ -9,29 +9,37 @@
           <th scope="col">ID</th>
           <th scope="col">Code</th>
           <th scope="col">Description</th>
+          <th scope="col">Reporter</th>
           <th scope="col">Delete Action</th>
           <th scope="col">Edit Action</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let project of projects">
-          <td scope="row" [routerLink]="['/tasks', project.id]">{{project.id}}</td>
+          <td scope="row"><a class="link" [routerLink]="['/tasks', project.id]" href="#" (click)="$event.preventDefault();">{{project.id}}</a></td>
           <td scope="col">{{project.code}}</td>
           <td scope="col">{{project.description}}</td>
+          <td scope="col">{{project.reporter.name}} {{project.reporter.sname}}</td>
           <td>
-            <button type="button" class="btn btn-danger" (click)="deleteProject(project.id)">Delete</button>
+            <button type="button" [disabled]="isDeveloper() || isTester()" class="btn btn-danger" (click)="deleteProject(project.id)">Delete</button>
           </td>
           <td>
-            <button type="button" class="btn btn-secondary" (click)="openModal(newproject,project)">Edit</button>
+            <button type="button" class="btn btn-secondary" (click)="openModal(editproject,project)">Edit</button>
           </td>
         </tr>
         </tbody>
       </table>
+      <div *ngIf="totalItems" class="row">
+        <div class="col-xs-12 col-12">
+          <pagination [boundaryLinks]="true" [totalItems]="totalItems" [(ngModel)]="page" [itemsPerPage]="1"
+                      (pageChanged)="pageChanged($event)"></pagination>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<ng-template #newproject>
-  <app-newproject [editMode]="true" [editProject]="editProject" [modalRef]="modalRef"></app-newproject>
+<ng-template #editproject>
+  <app-edit-project [id]="editProject.id" [modalRef]="modalRef"></app-edit-project>
 </ng-template>
 

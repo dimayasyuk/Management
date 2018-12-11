@@ -5,6 +5,7 @@ import com.netcracker.edu.backend.fapi.model.Task;
 import com.netcracker.edu.backend.fapi.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,8 +40,26 @@ public class TaskController {
         return null;
     }
 
+    @PreAuthorize("hasAnyRole()")
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public void deleteTask(@PathVariable String id) {
         service.deleteTask(Long.valueOf(id));
+    }
+
+    @RequestMapping(value = "/page/{page}/id/{id}",method = RequestMethod.GET)
+    public ResponseEntity getCurrentTasks(@PathVariable(name = "page") String page,@PathVariable(name = "id") String id){
+        return ResponseEntity.ok(service.getCurrentTasks(Long.valueOf(page),Long.valueOf(id)));
+    }
+
+    @RequestMapping(value = "/page/{page}/priority/id/{id}/direction/{direction}",method = RequestMethod.GET)
+    public ResponseEntity getSortingTasksByPriotity(@PathVariable(name = "page") String page,
+                                                    @PathVariable(name = "id") String id,@PathVariable(name = "direction") String direction){
+        return ResponseEntity.ok(service.getSortingTasksByPriotity(Long.valueOf(page),Long.valueOf(id), direction));
+    }
+
+    @RequestMapping(value = "/page/{page}/status/id/{id}/direction/{direction}",method = RequestMethod.GET)
+    public ResponseEntity getSortingTasksByStatus(@PathVariable(name = "page") String page,@PathVariable(name = "id") String id,
+                                                  @PathVariable(name = "direction") String direction){
+        return ResponseEntity.ok(service.getSortingTasksByStatus(Long.valueOf(page),Long.valueOf(id),direction));
     }
 }

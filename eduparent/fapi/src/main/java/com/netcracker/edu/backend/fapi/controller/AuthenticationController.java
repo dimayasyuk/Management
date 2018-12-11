@@ -12,13 +12,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/token")
+@RequestMapping("/api/token")
 public class AuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -29,7 +26,7 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/generate-token", method = RequestMethod.POST)
+    @RequestMapping(value = "/generate", method = RequestMethod.POST)
     public ResponseEntity register(@RequestBody LoginUser loginUser) throws AuthenticationException {
 
         final Authentication authentication = authenticationManager.authenticate(
@@ -39,8 +36,14 @@ public class AuthenticationController {
                 )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        final User user = userService.findUserByUsername(loginUser.getUsername());
         final String token = jwtTokenUtil.generateToken(authentication);
         return ResponseEntity.ok(new AuthToken(token));
+    }
+    @RequestMapping(value = "{token}", method = RequestMethod.GET)
+    public ResponseEntity<User> findUserByToken(@PathVariable(name="token") String token) throws AuthenticationException {
+        String username = jwtTokenUtil.getUsernameFromToken(token);
+        User user = userService.findUserByUsername(username);
+        user.setPassword(null);
+        return ResponseEntity.ok(user);
     }
 }

@@ -4,6 +4,7 @@ import com.netcracker.edu.backend.fapi.model.Project;
 import com.netcracker.edu.backend.fapi.model.Task;
 import com.netcracker.edu.backend.fapi.service.TaskService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -46,5 +47,23 @@ public class TaskServiceImpl implements TaskService {
     public void deleteTask(Long id) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(backendUrl + "/api/tasks/" + id);
+    }
+
+    @Override
+    public ResponseEntity getCurrentTasks(Long page, Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForEntity(backendUrl + "/api/tasks/page/" + page + "/id/" + id,Task[].class);
+    }
+
+    @Override
+    public ResponseEntity getSortingTasksByPriotity(Long page, Long id, String direction) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForEntity(backendUrl + "/api/tasks/page/" + page + "/priority" + "/id/" + id + "/direction/" + direction,Task[].class);
+    }
+
+    @Override
+    public ResponseEntity getSortingTasksByStatus(Long page, Long id,String direction) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForEntity(backendUrl + "/api/tasks/page/" + page + "/status" + "/id/" + id + "/direction/" + direction,Task[].class);
     }
 }

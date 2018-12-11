@@ -10,9 +10,8 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
-  attemptAuth(ussername: string, password: string): Observable<any> {
-    const credentials = {username: ussername, password: password};
-    console.log('attempAuth ::');
-    return this.http.post('/token/generate-token', credentials);
+  attemptAuth(username: string, password: string): Observable<any> {
+    const credentials = {username: username, password: password};
+    return this.http.post<any>('/api/token/generate', credentials);
   }
 }

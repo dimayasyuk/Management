@@ -8,14 +8,24 @@ public class User {
     private String login;
     private String password;
     private Role role;
+    private Account account;
 
     public User(){}
 
-    public User( long id,String login,String password,Role role){
+    public User( long id,String login,String password,Role role,Account account){
         this.id = id;
         this.login = login;
         this.password = password;
         this.role = role;
+        this.account = account;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public long getId() {

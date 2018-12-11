@@ -14,6 +14,14 @@ export class ProjectService {
     return this.http.get<Project[]>('/api/projects');
   }
 
+  getCurrentProjects(page: number): Observable<any> {
+    return this.http.get<any>('/api/projects/page/' + page);
+  }
+
+  getNumberOfProjects(): Observable<number>{
+    return this.http.get<number>('/api/projects/number');
+  }
+
   getProjectById(id: number): Observable<Project> {
     return this.http.get<Project>('/api/projects/' + id);
   }

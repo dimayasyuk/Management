@@ -3,10 +3,7 @@ package com.netcracker.edu.backend.controller;
 import com.netcracker.edu.backend.model.Account;
 import com.netcracker.edu.backend.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/accounts")
@@ -30,5 +27,10 @@ public class AccountController {
             service.saveAccount(account);
         }
         return null;
+    }
+
+    @RequestMapping(value = "{id}",method = RequestMethod.GET)
+    public Account findAccountByUser(@PathVariable(name = "id") String id) {
+        return service.findAccountByUser(Long.valueOf(id));
     }
 }

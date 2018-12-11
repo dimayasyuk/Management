@@ -1,6 +1,6 @@
 <ng4-loading-spinner></ng4-loading-spinner>
 <app-header [project]="project"></app-header>
-<div class="container-fluid body-container">
+<div class="container-fluid">
   <div class="row">
     <div class="col-sm-12">
       <button class="btn btn-link" [routerLink]="['/projects']">{{project.code}}</button>
@@ -12,8 +12,17 @@
         <thead>
         <tr>
           <th scope="col">Task Code</th>
-          <th scope="col">Priority</th>
-          <th scope="col">Status</th>
+          <th scope="col"><a class="t-link" (click)="$event.preventDefault(); sortByPriority(true)" href="#">Priority</a>
+            <button class="but">
+              <img src="./assets/filtr.png" class="img" alt="" style="vertical-align:middle">
+            </button>
+          </th>
+          <th scope="col"><a class="t-link" (click)="$event.preventDefault(); sortByStatus(true)" href="#">Status</a>
+            <button class="but">
+              <img src="./assets/filtr.png" class="img" alt="" style="vertical-align:middle">
+            </button>
+          </th>
+          <th scope="col">Reporter</th>
           <th scope="col">Created</th>
           <th scope="col">Updated</th>
           <th scope="col">Due Date</th>
@@ -26,9 +35,11 @@
         </thead>
         <tbody>
         <tr *ngFor="let task of tasks">
-          <td [routerLink]="['/task', task.id]">{{task.code}}</td>
+          <td scope="row"><a class="link" [routerLink]="['/task', task.id]" href="#" (click)="$event.preventDefault();">{{task.code}}</a>
+          </td>
           <td>{{task.priority.name}}</td>
           <td>{{task.status.name}}</td>
+          <td>{{task.reporter.name}} {{task.reporter.sname}}</td>
           <td>{{task.created}}</td>
           <td>{{task.updated}}</td>
           <td>{{task.dueDate}}</td>
@@ -43,6 +54,12 @@
           </td>
         </tbody>
       </table>
+      <div *ngIf="totalItems" class="row">
+        <div class="col-xs-12 col-12">
+          <pagination [boundaryLinks]="true" [totalItems]="totalItems" [(ngModel)]="page" [itemsPerPage]="1"
+                      (pageChanged)="pageChanged($event)"></pagination>
+        </div>
+      </div>
     </div>
   </div>
 </div>

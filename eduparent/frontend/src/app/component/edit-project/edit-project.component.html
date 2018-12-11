@@ -1,3 +1,23 @@
-<p>
-  edit-project works!
-</p>
+<div class="modal-header" *ngIf="editProject">
+  <h4 class="modal-title pull-left">Edit Project</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" *ngIf="editProject">
+  <div class="form-group">
+    <label>Code</label>
+    <input class="form-control" name="code" [(ngModel)]="editProject.code" #code="ngModel" required/>
+    <div [hidden]="code.valid || code.untouched" class="alert alert-danger">Please set projectcode</div>
+  </div>
+  <div class="form-group">
+    <label>Description</label>
+    <input class="form-control" name="description" [(ngModel)]="editProject.description" #description="ngModel"
+           required/>
+    <div [hidden]="description.valid || description.untouched" class="alert alert-danger"></div>
+  </div>
+</div>
+<div class="modal-footer" *ngIf="editProject">
+  <button type="button" class="btn btn-success" (click)="updateProject()">Edit</button>
+  <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
+</div>

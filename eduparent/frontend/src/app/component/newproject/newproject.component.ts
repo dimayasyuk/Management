@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Project} from "../../model/project";
-import {Account} from "../../model/account";
 import {ProjectService} from "../../service/project/project.service";
 import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
 import {BsModalRef} from "ngx-bootstrap";
 import {ProjectsListComponent} from "../projects-list/projects-list.component";
+import {UserStorageService} from "../../service/user/user-storage.service";
 
 @Component({
   selector: 'app-newproject',
@@ -13,30 +13,27 @@ import {ProjectsListComponent} from "../projects-list/projects-list.component";
 })
 export class NewprojectComponent implements OnInit {
 
-  @Input()
-  public editMode = false;
-  @Input()
   public editProject: Project;
   @Input()
   public modalRef: BsModalRef;
 
   constructor(private  projectService: ProjectService,
-              private loadingService: Ng4LoadingSpinnerService,private projectComponent: ProjectsListComponent) {
+              private loadingService: Ng4LoadingSpinnerService,private projectComponent: ProjectsListComponent,
+              private userStorage: UserStorageService) {
   }
 
   ngOnInit() {
     this.editProject = new Project();
   }
 
-  public addProject(): void {
+   addProject(): void {
     this.loadingService.show();
-    this.editProject.reporter.id = 16;
+    this.editProject.reporter = this.userStorage.getAccount();
     this.projectService.saveProject(this.editProject).subscribe(() => {
-        this.updateEditProject();
         this.projectComponent.updateProjects();
         this.loadingService.hide();
         this.closeModal();
-        this.editMode = false;
+        this.updateEditProject();
       }
     )
   }

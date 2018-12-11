@@ -24,4 +24,9 @@ public class AccountServiceImpl implements AccountService {
     public Account saveAccount(Account account) {
         return repository.save(account);
     }
+
+    @Override
+    public Account findAccountByUser(Long id) {
+        return repository.findAccountsByUserId(id);
+    }
 }

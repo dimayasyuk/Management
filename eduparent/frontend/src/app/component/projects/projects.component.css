@@ -14,6 +14,8 @@
 .but{
   border:0;
   background-color: initial;
+  height: 10px;
+  width: 10px;
 }
 .img{
   width: 20px;
@@ -40,6 +42,19 @@
   color : white;
   background-color: darkcyan;
   height: 35px;
+}
+
+.link {
+  color: darkslategray !important;
+  font-weight: bold;
+}
+
+.btns {
+  color: white;
+}
+.btn-link {
+  color: darkslategray;
+  font-weight: bold;
 }
 .btn:hover{
   font-weight : bold;

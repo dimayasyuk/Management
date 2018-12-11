@@ -17,6 +17,11 @@ export class TasksComponent implements OnInit {
   public tasks: Task[];
   @Input()
   public editTask: Task;
+  public page: number = 1;
+  public sortPriorityMode: boolean = false;
+  public sortASC: boolean = false;
+  public sortStatusMode: boolean = false;
+  public totalItems: number;
   public modalRef: BsModalRef;
 
 
@@ -35,32 +40,105 @@ export class TasksComponent implements OnInit {
     this.projectService.getProjectById(id).subscribe(
       (project) => {
         this.project = project;
-        this.loadTasksByProjectId(id);
+        this.loadCurrentTasks();
       }
     )
   }
 
-  loadTasksByProjectId(id: number) {
-    this.taskService.getTasksByProjectId(id).subscribe((tasks) => {
-      this.tasks = tasks;
-      this.loadingService.hide();
-    })
+  pageChanged(event: any): void {
+    this.page = event.page;
+    if (this.sortStatusMode) {
+      this.sortByStatus(false);
+    } else if (this.sortPriorityMode) {
+      this.sortByPriority(false);
+    } else {
+      this.loadCurrentTasks();
+    }
   }
 
-  updateTasks(){
-    this.loadTasksByProjectId(this.project.id);
+  private loadCurrentTasks(): void {
+    this.loadingService.show();
+    this.taskService.getCurrentTasks(this.page - 1, this.project.id).subscribe(
+      tasks => {
+        this.totalItems = tasks.headers.page[0];
+        this.tasks = tasks.body;
+        this.loadingService.hide();
+      }
+    );
   }
 
-  deleteTask(taskId: number):void{
+  isDirection(): string {
+    if (this.sortASC) {
+      this.sortASC = false;
+      return 'DESC';
+    } else {
+      this.sortASC = true;
+      return 'ASC';
+    }
+  }
+
+  getDirection(): string {
+    if (this.sortASC) {
+      return 'ASC';
+    } else {
+      return 'DESC';
+    }
+  }
+
+  sortByPriority(direct: boolean): void {
+    this.sortPriorityMode = true;
+    this.sortStatusMode = false;
+    this.loadingService.show();
+    let direction: string = this.getDirection();
+    if (direct) {
+      direction = this.isDirection();
+    }
+    this.taskService.getSortingTasksByPriotity(this.page - 1, this.project.id, direction).subscribe(
+      tasks => {
+        this.totalItems = tasks.headers.page[0];
+        this.tasks = tasks.body;
+        this.loadingService.hide();
+      }
+    );
+  }
+
+  sortByStatus(direct: boolean): void {
+    this.sortStatusMode = true;
+    this.sortPriorityMode = false;
+    let direction: string = this.getDirection();
+    if (direct) {
+      direction = this.isDirection();
+    }
+    this.loadingService.show();
+    this.taskService.getSortingTasksByStatus(this.page - 1, this.project.id,direction).subscribe(
+      tasks => {
+        this.totalItems = tasks.headers.page[0];
+        this.tasks = tasks.body;
+        this.loadingService.hide();
+      }
+    );
+  }
+
+  updateTasks() {
+    if (this.sortStatusMode) {
+      this.sortByStatus(false);
+    } else if (this.sortPriorityMode) {
+      this.sortByPriority(false);
+    } else {
+      this.loadCurrentTasks();
+    }
+  }
+
+  deleteTask(taskId: number): void {
     this.loadingService.show();
     this.taskService.deleteTask(taskId).subscribe(
-      () =>{
+      () => {
         this.updateTasks();
       }
     )
   }
 
-  openModal(template: TemplateRef<any>,task: Task) {
+  openModal(template: TemplateRef<any>, task: Task) {
     this.editTask = task;
     this.modalRef = this.modalService.show(template);
   }

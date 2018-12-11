@@ -7,15 +7,15 @@ public class Project {
     private long id;
     private String code;
     private String description;
-    private int createdId;
+    private Account reporter;
 
     public Project(){}
 
-    public Project(long id,String code,String description,int createdId){
+    public Project(long id,String code,String description,Account reporter){
         this.id = id;
         this.code = code;
         this.description = description;
-        this.createdId = createdId;
+        this.reporter = reporter;
     }
 
     public long getId() {
@@ -42,11 +42,11 @@ public class Project {
         this.description = description;
     }
 
-    public int getCreatedId() {
-        return createdId;
+    public Account getReporter() {
+        return reporter;
     }
 
-    public void setCreatedId(int createdId) {
-        this.createdId = createdId;
+    public void setReporter(Account reporter) {
+        this.reporter = reporter;
     }
 }

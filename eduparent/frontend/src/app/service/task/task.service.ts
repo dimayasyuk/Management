@@ -19,6 +19,18 @@ export class TaskService {
     return this.http.post<Task>('/api/tasks', task);
   }
 
+  getCurrentTasks(page: number,id: number): Observable<any> {
+    return this.http.get<any>('/api/tasks/page/' + page + '/id/' + id);
+  }
+
+  getSortingTasksByPriotity(page: number, id:number,direction:string): Observable<any>{
+    return this.http.get<any>('/api/tasks/page/' + page + '/priority' + '/id/' + id + '/direction/' + direction);
+  }
+
+  getSortingTasksByStatus(page: number, id:number,direction:string): Observable<any>{
+    return this.http.get<any>('/api/tasks/page/' + page + '/status' + '/id/' + id + '/direction/' + direction);
+  }
+
   getTasksByProjectId(projectId: number):Observable<Task[]>{
     return this.http.get<Task[]>('/api/tasks/' + projectId);
   }

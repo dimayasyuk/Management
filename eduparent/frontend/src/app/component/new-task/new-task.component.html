@@ -7,6 +7,15 @@
 <div class="modal-body">
 
   <div class="form-group">
+    <label>Project</label>
+    <div>
+      <select class="form-control" [(ngModel)]="project">
+        <option *ngFor="let key of projects" [ngValue]="key">{{ key.code }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
     <label>Due Date</label>
     <input class="form-control"
            #dpYMD="bsDatepicker"
@@ -17,7 +26,7 @@
            [(ngModel)]="editTask.dueDate"
            #duedate="ngModel"
            required/>
-</div>
+  </div>
 
   <div class="form-group">
     <label>Estimation</label>

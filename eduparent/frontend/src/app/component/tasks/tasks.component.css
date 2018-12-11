@@ -1,35 +1,60 @@
-.navbar{
-  background:darkcyan;
+.navbar {
+  background: darkcyan;
 }
-.nav-link , .navbar-brand{
+
+.nav-link, .navbar-brand {
   color: #f4f4f4;
 }
-.nav-link{
-  margin-right: 1em !important;
-}
-.nav-link:hover{
-  font-weight : bold;
+
+.nav-link:hover {
+  font-weight: bold;
   background: white;
   color: darkslategrey;
 }
-.navbar-collapse{
+
+.link:hover {
+  font-weight: bold;
+  background: white;
+  color: darkslategrey;
+}
+
+.link {
+  color: darkslategray !important;
+  font-weight: bold;
+}
+
+.t-link{
+  color: darkslategrey;
+}
+
+.navbar-collapse {
   justify-content: flex-end;
 }
-.navbar-toggler{
-  background:#fff !important;
+
+.navbar-toggler {
+  background: #fff !important;
 }
-.table thead th{
+
+.table thead th {
   color: darkslategrey !important;
   font-weight: normal !important;
 }
-.btn{
+
+.btn {
   color: white;
 }
-.table tbody td{
-  color : darkslategray !important;
+
+.table tbody td {
+  color: darkslategray !important;
   font-weight: bold;
 }
-.btn-link{
+
+.btn-link {
   color: darkslategray;
   font-weight: bold;
+}
+
+.but{
+  border:0;
+  background-color: initial;
 }

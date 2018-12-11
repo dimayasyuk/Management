@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../service/auth/auth.service";
 import {TokenStorageService} from "../../service/token/token.storage.service";
+import {User} from "../../model/user";
+import {UserService} from "../../service/user/user.service";
+import {UserStorageService} from "../../service/user/user-storage.service";
+import {AccountService} from "../../service/account/account.service";
+import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
 
 @Component({
   selector: 'app-authorization',
@@ -10,16 +15,29 @@ import {TokenStorageService} from "../../service/token/token.storage.service";
 })
 export class AuthorizationComponent implements OnInit {
 
-  constructor(private router: Router, private authService: AuthService, private token: TokenStorageService) {
+  user: User = new User();
+
+  constructor(private router: Router, private authService: AuthService,
+              private token: TokenStorageService, private userService: UserService,
+              private acccountService:AccountService,private userStorage: UserStorageService,private loadingService: Ng4LoadingSpinnerService,) {
   }
 
-  username: string;
-  password: string;
   login(): void {
-    this.authService.attemptAuth(this.username, this.password).subscribe(
+    this.loadingService.show();
+    this.authService.attemptAuth(this.user.login, this.user.password).subscribe(
       data => {
         this.token.saveToken(data.token);
-        this.router.navigate(['projects']);
+        this.userService.getUserByToken(data.token).subscribe(
+          user => {
+            this.acccountService.getAccountByUserId(user.id).subscribe(
+              account =>{
+                this.userStorage.saveUser(user,account);
+                this.router.navigate(['projects']);
+                this.loadingService.hide();
+              }
+            );
+          }
+        );
       }
     );
   }

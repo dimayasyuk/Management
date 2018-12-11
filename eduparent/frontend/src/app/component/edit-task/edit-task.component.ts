@@ -47,7 +47,6 @@ export class EditTaskComponent implements OnInit {
     this.taskService.getTaskById(this.id).subscribe(
       task => {
         this.editTask = task;
-        console.log(this.editTask);
       }
     )
   }

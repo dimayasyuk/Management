@@ -18,4 +18,8 @@ export class AccountService {
   saveAccount(account: Account): Observable<Account> {
     return this.http.post<Account>('api/accounts', account);
   }
+
+  getAccountByUserId(id: number): Observable<Account>{
+    return this.http.get<Account>('api/accounts/' + id);
+  }
 }

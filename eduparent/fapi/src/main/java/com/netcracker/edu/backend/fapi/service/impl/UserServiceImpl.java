@@ -7,6 +7,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,7 +27,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     private List<SimpleGrantedAuthority> getAuthority(User user) {
-        return Arrays.asList(new SimpleGrantedAuthority(user.getRole().getName()));
+
+        return Arrays.asList(new SimpleGrantedAuthority("ROLE_" + user.getRole().getName()));
     }
 
     @Override
@@ -52,6 +54,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public User saveUser(User user) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.postForEntity(backendUrl + "/api/users",user,User.class).getBody();
     }

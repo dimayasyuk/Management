@@ -12,6 +12,7 @@ import {Attachments} from "../../model/attachment";
 import {AttachmentService} from "../../service/attachment/attachment.service";
 import {StatusService} from "../../service/status/status.service";
 import {AccountService} from "../../service/account/account.service";
+import {UserStorageService} from "../../service/user/user-storage.service";
 
 @Component({
   selector: 'app-projects',
@@ -32,7 +33,7 @@ export class ProjectsComponent implements OnInit {
   constructor(private taskService: TaskService, private projectService: ProjectService,
               private route: ActivatedRoute, private loadingService: Ng4LoadingSpinnerService, private statusService: StatusService,
               private modalService: BsModalService, private commentService: CommentService, private attachmentService: AttachmentService
-    , private accountService: AccountService) {
+    , private accountService: AccountService,private userStorage:UserStorageService) {
   }
 
   ngOnInit() {
@@ -61,6 +62,7 @@ export class ProjectsComponent implements OnInit {
   saveComment(): void {
     this.loadingService.show();
     this.comment.taskId = this.editTask.id;
+    this.comment.account = this.userStorage.getAccount();
     this.comment.posted = Date.now();
     this.commentService.saveComment(this.comment).subscribe(
       () => {

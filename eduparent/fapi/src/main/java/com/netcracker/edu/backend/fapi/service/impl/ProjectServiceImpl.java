@@ -3,6 +3,8 @@ package com.netcracker.edu.backend.fapi.service.impl;
 import com.netcracker.edu.backend.fapi.model.Project;
 import com.netcracker.edu.backend.fapi.service.ProjectService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -37,5 +39,17 @@ public class ProjectServiceImpl implements ProjectService {
     public void deleteProject(Long id) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(backendUrl + "/api/projects/" + id);
+    }
+
+    @Override
+    public Integer getNumberOfProjects() {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(backendUrl + "/api/projects/number", Integer.class);
+    }
+
+    @Override
+    public ResponseEntity getCurrentProjects(Long page) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForEntity(backendUrl + "/api/projects/page/" + page,Project[].class);
     }
 }

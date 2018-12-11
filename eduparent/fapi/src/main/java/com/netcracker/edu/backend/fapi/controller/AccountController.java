@@ -5,10 +5,7 @@ import com.netcracker.edu.backend.fapi.model.Project;
 import com.netcracker.edu.backend.fapi.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,4 +28,10 @@ public class AccountController {
         }
         return null;
     }
+
+    @RequestMapping(value = "{id}",method = RequestMethod.GET)
+    public ResponseEntity<Account> getAccountByUser(@PathVariable(name = "id") String id){
+        return ResponseEntity.ok(service.getAccountByUserId(id));
+    }
+
 }

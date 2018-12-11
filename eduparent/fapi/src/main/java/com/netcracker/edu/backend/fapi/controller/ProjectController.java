@@ -26,6 +26,16 @@ public class ProjectController {
         return ResponseEntity.ok(service.findProjectById(Long.valueOf(id)));
     }
 
+    @RequestMapping(value = "/page/{page}",method = RequestMethod.GET)
+    public ResponseEntity getCurrentProjects(@PathVariable(name = "page") String page){
+        return ResponseEntity.ok(service.getCurrentProjects(Long.valueOf(page)));
+    }
+
+    @RequestMapping(value = "/number",method = RequestMethod.GET)
+    public ResponseEntity<Integer> getNumberOfProjects(){
+        return ResponseEntity.ok(service.getNumberOfProjects());
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Project> saveProject(@RequestBody Project project){
         if(project != null) {

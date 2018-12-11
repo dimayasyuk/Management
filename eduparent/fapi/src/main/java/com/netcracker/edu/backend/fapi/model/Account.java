@@ -8,7 +8,6 @@ public class Account {
     private String name;
     private String sname;
     private String email;
-    private User user;
     private int userId;
 
     Account(){}

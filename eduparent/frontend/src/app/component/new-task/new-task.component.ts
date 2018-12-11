@@ -11,6 +11,8 @@ import {StatusService} from "../../service/status/status.service";
 import {Project} from "../../model/project";
 import {Status} from "../../model/status";
 import {TasksComponent} from "../tasks/tasks.component";
+import {UserStorageService} from "../../service/user/user-storage.service";
+import {ProjectService} from "../../service/project/project.service";
 
 @Component({
   selector: 'app-new-task',
@@ -25,12 +27,14 @@ export class NewTaskComponent implements OnInit {
   public priorities: Priority[];
   public statuses: Status[];
   public accounts: Account[];
-  @Input()
   public project: Project;
+  public projects: Project[];
   public minDate = new Date(Date.now());
 
   constructor(private loadingService: Ng4LoadingSpinnerService, private priorityService: PriorityService,
-              private accountService: AccountService, private taskService: TaskService, private statusService: StatusService, private taskComponent: TasksComponent) {
+              private accountService: AccountService, private taskService: TaskService,
+              private statusService: StatusService, private taskComponent: TasksComponent,
+              private userStorage: UserStorageService,private projectService:ProjectService) {
   }
 
   ngOnInit() {
@@ -38,6 +42,8 @@ export class NewTaskComponent implements OnInit {
     this.loadPriorities();
     this.loadAccounts();
     this.loadStatus();
+    this.loadProjects();
+    this.loadCountTasks();
   }
 
   closeModal(): void {
@@ -50,7 +56,8 @@ export class NewTaskComponent implements OnInit {
     this.editTask.updated = new Date().getTime();
     this.editTask.statusId = this.statuses[0].id;
     this.editTask.projectId = this.project.id;
-    this.editTask.code = this.project.code;
+    this.editTask.code = this.project.code + '';
+    this.editTask.reporter = this.userStorage.getAccount();
 
     this.taskService.saveTask(this.editTask).subscribe(
       () => {
@@ -62,6 +69,9 @@ export class NewTaskComponent implements OnInit {
     )
   }
 
+  loadCountTasks(): void{
+  }
+
   loadPriorities(): void {
     this.priorityService.getPriorities().subscribe(
       priority => {
@@ -69,6 +79,14 @@ export class NewTaskComponent implements OnInit {
         this.editTask.priority = this.priorities[0];
       }
     );
+  }
+
+  loadProjects():void{
+    this.projectService.getProjects().subscribe(
+      projects =>{
+        this.projects = projects;
+      }
+    )
   }
 
   loadStatus(): void {

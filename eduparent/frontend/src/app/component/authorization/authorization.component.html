@@ -1,3 +1,4 @@
+<ng4-loading-spinner></ng4-loading-spinner>
 <nav class="navbar navbar-expand-lg fixed-top ">
   <a class="navbar-brand" href="http://minsk.edu-netcracker.com">Netcracker</a>
 </nav>
@@ -9,18 +10,14 @@
         <form>
           <div class="form-group">
             <label class="font-weight-bold"  for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" [(ngModel)]="username" id="exampleInputEmail1" aria-describedby="emailHelp"
+            <input [(ngModel)]="user.login" [ngModelOptions]="{standalone: true}" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                    placeholder="Enter email">
           </div>
           <div class="form-group">
             <label class="font-weight-bold" for="exampleInputPassword1">Password</label>
-            <input [(ngModel)]="password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <input [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
           </div>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label font-italic " for="exampleCheck1">Remember me</label>
-          </div>
-          <button type="submit" (click)="login()" class="btn button-with-padding" routerLink="/projects">Submit</button>
+          <button type="submit" (click)="login()" class="btn button-with-padding">Submit</button>
         </form>
       </div>
     </div>

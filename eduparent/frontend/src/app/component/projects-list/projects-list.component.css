@@ -1,14 +1,23 @@
-.table thead th{
+.table thead th {
   color: darkslategrey !important;
   font-weight: normal !important;
 }
-.btn{
+
+.btn {
   color: white;
   width: 100px;
 }
-.table tbody td{
-  color : darkslategray !important;
+
+.table tbody td {
+  color: darkslategray !important;
   font-weight: bold;
-}.btn-outline-dark{
+}
+
+.btn-outline-dark {
   color: darkslategray;
- }
+}
+
+.link{
+  color: darkslategray !important;
+  font-weight: bold;
+}
