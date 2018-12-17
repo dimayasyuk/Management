@@ -7,6 +7,7 @@ import {AccountService} from "../../service/account/account.service";
 import {UserService} from "../../service/user/user.service";
 import {Account} from "../../model/account";
 import {UserStorageService} from "../../service/user/user-storage.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-new-user',
@@ -20,9 +21,11 @@ export class NewUserComponent implements OnInit {
   public roles: Role[];
   public user: User;
   public account: Account;
+  public errorLogin: boolean = false;
+  public errorEmail: boolean = false;
 
   constructor(private roleService: RoleService, private loadingService: Ng4LoadingSpinnerService, private userService: UserService,
-              private accountService: AccountService) {
+              private accountService: AccountService, private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -30,6 +33,7 @@ export class NewUserComponent implements OnInit {
     this.account = new Account();
     this.loadRoles();
   }
+
 
   private loadRoles(): void {
     this.loadingService.show();
@@ -47,15 +51,47 @@ export class NewUserComponent implements OnInit {
   }
 
   public addUser(): void {
-    this.loadingService.show();
-    this.userService.saveUser(this.user).subscribe(
-      () => {
-        this.getUserByLogin();
+    this.loadingService.show()
+    this.userService.getUserByLogin(this.user.login).subscribe(
+      user => {
+        if (user) {
+          this.errorLogin = true;
+        } else {
+          this.accountService.getAccountByEmail(this.account.email).subscribe(
+            account =>{
+              if(account){
+                this.errorEmail = true;
+              }else {
+                this.saveUser();
+              }
+            }
+          )
+        }
       }
     )
   }
 
-  private getUserByLogin(){
+  public setErrorLogin(): void {
+    this.errorLogin = false;
+  }
+
+  public setErrorEmail(): void {
+    this.errorEmail = false;
+  }
+
+  saveUser(): void {
+    this.userService.saveUser(this.user).subscribe(
+      (user) => {
+        if(user) {
+          this.getUserByLogin();
+        }else{
+          this.errorLogin = true;
+        }
+      }
+    )
+  }
+
+  private getUserByLogin() {
     this.userService.getUserByLogin(this.user.login).subscribe(
       user => {
         this.account.userId = user.id;

@@ -9,6 +9,7 @@ public interface ProjectService {
     List<Project> getAllProjects();
     Project saveProject(Project project);
     Project findProjectById(Long id);
+    Project getProjectByCode(String code);
     void deleteProject(Long id);
     Integer getNumberOfProjects();
     ResponseEntity getCurrentProjects(Long page);

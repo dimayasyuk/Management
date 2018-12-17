@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +17,7 @@ public interface TaskRepository extends JpaRepository<Task,Long> {
     Iterable<Task> findTasksByProjectId(Long projectId);
     Page findTasksByProjectId(Long projectId, Pageable pageable);
     Task findTaskById(Long taskId);
+    Task findTopByOrderByIdDesc();
+    Page findTasksByProjectIdAndStatusId(Long projectId,Long statusId,Pageable pageable);
+    Page findTasksByProjectIdAndPriorityId(Long projectId,Long priorityId,Pageable pageable);
 }

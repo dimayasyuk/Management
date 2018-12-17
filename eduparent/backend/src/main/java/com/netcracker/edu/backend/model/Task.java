@@ -1,6 +1,11 @@
 package com.netcracker.edu.backend.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -8,20 +13,38 @@ import java.util.Objects;
 @Entity
 public class Task {
     private long id;
+    @NotNull
+    @Size(max=45)
     private String code;
+    @NotNull
+    @DateTimeFormat
     private Date created;
+    @DateTimeFormat
     private Date closed;
+    @NotNull
+    @DateTimeFormat
     private Date updated;
+    @NotNull
+    @DateTimeFormat
     private Date dueDate;
+    @NotNull
+    @Digits(integer=3, fraction=0)
     private Integer estimation;
+    @NotNull
+    @Size(max=45)
     private String description;
-    private Account assignee;
+    @NotNull
     private Account reporter;
-    private Status status;
+    @NotNull
     private long priorityId;
-    private long statusId;
-    private long assignedId;
     private Priority priority;
+    @NotNull
+    private long statusId;
+    private Status status;
+    @NotNull
+    private long assignedId;
+    private Account assignee;
+    @NotNull
     private Long projectId;
 
     @Id

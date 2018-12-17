@@ -1,70 +1,74 @@
 <ng4-loading-spinner></ng4-loading-spinner>
-<div class="modal-header" *ngIf="editTask">
-  <h4 class="modal-title pull-left">Edit new Task</h4>
-  <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div class="modal-body" *ngIf="editTask && statuses && accounts && priorities">
-
-  <div class="form-group">
-    <label>Due Date</label>
-    <input class="form-control"
-           #dpYMD="bsDatepicker"
-           bsDatepicker
-           [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
-           [minDate]="minDate"
-           name="duedate"
-           [(ngModel)]="editTask.dueDate"
-           #duedate="ngModel"
-           required/>
+<div *ngIf="editTask && statuses && accounts && priorities">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Edit new Task</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
+  <div class="modal-body">
 
-  <div class="form-group">
-    <label>Estimation</label>
-    <input class="form-control" name="estimation" [(ngModel)]="editTask.estimation" #estimation="ngModel"
-           required/>
-    <div [hidden]="estimation.valid || estimation.untouched" class="alert alert-danger">
-      Uncorrect estimation
+    <div class="form-group">
+      <label>Due Date</label>
+      <input type="date" class="form-control"
+             #dpYMD="bsDatepicker"
+             bsDatepicker
+             [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
+             [minDate]="minDate"
+             name="duedate"
+             [(ngModel)]="editTask.dueDate"
+             #duedate="ngModel"
+             required/>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label>Description</label>
-    <input class="form-control" name="description" [(ngModel)]="editTask.description" #description="ngModel"
-           required/>
-    <div [hidden]="description.valid || description.untouched" class="alert alert-danger">
-      Please, set description
+    <div class="form-group">
+      <label>Estimation</label>
+      <input type="number" class="form-control" name="estimation" [(ngModel)]="editTask.estimation"
+             #estimation="ngModel"
+             tooltip="Estimation should include less than 5 characters."
+             placement="top"
+             required pattern="[1-9]{1}[0-9]{0,4}"/>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label>Assignee</label>
-    <select class="form-control" [(ngModel)]="editTask.assignedId">
-      <option *ngFor="let key of accounts" [ngValue]="key.id">{{key.name}} {{key.sname}}</option>
-    </select>
-  </div>
+    <div class="form-group">
+      <label>Description</label>
+      <input class="form-control" name="description" [(ngModel)]="editTask.description" #description="ngModel"
+             tooltip="Description should include less than 45 symbols."
+             placement="top"
+             required pattern="(.){1,45}"/>
+    </div>
 
-  <div class="form-group">
-    <label>Priority</label>
-    <div>
-      <select class="form-control" [(ngModel)]="editTask.priorityId">
-        <option *ngFor="let key of priorities" [ngValue]="key.id">{{key.name}}</option>
+    <div class="form-group">
+      <label>Assignee</label>
+      <select class="form-control" [(ngModel)]="editTask.assignedId">
+        <option *ngFor="let key of accounts" [ngValue]="key.id">{{key.name}} {{key.sname}}</option>
       </select>
     </div>
-  </div>
 
-  <div class="form-group">
-    <label>Status</label>
-    <div>
-      <select class="form-control" [(ngModel)]="editTask.statusId">
-        <option *ngFor="let key of statuses" [ngValue]="key.id">{{key.name}}</option>
-      </select>
+    <div class="form-group">
+      <label>Priority</label>
+      <div>
+        <select class="form-control" [(ngModel)]="editTask.priorityId">
+          <option *ngFor="let key of priorities" [ngValue]="key.id">{{key.name}}</option>
+        </select>
+      </div>
     </div>
-  </div>
 
-</div>
-<div class="modal-footer" *ngIf="editTask">
-  <button type="button" class="btn btn-success" (click)="updateTask()">Edit</button>
-  <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
+    <div class="form-group">
+      <label>Status</label>
+      <div>
+        <select class="form-control" [(ngModel)]="editTask.statusId">
+          <option *ngFor="let key of statuses" [ngValue]="key.id">{{key.name}}</option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success"
+            [disabled]="!duedate.valid ||!description.valid || !estimation.valid"
+            (click)="updateTask()">Edit
+    </button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
+  </div>
 </div>

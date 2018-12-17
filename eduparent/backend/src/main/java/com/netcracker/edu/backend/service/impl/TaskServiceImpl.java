@@ -34,6 +34,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public Task findTopByOrderByIdDesc() {
+        return repository.findTopByOrderByIdDesc();
+    }
+
+    @Override
     public Iterable<Task> getAllTasksByProject(Long projectId) {
         return repository.findTasksByProjectId(projectId);
     }
@@ -45,16 +50,26 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Page<Task> getCurrentTasks(Long page,Long id) {
-        return repository.findTasksByProjectId(id,PageRequest.of(page.intValue(),1));
+        return repository.findTasksByProjectId(id,PageRequest.of(page.intValue(),3));
     }
 
     @Override
     public Page<Task> getSortingTasksByPriority(Long page, Long id,String direction) {
-        return repository.findTasksByProjectId(id,PageRequest.of(page.intValue(), 1,Sort.Direction.valueOf(direction),"priority_id"));
+        return repository.findTasksByProjectId(id,PageRequest.of(page.intValue(), 3,Sort.Direction.valueOf(direction),"priority_id"));
     }
 
     @Override
     public Page<Task> getSortingTasksByStatus(Long page, Long id,String direction) {
-        return repository.findTasksByProjectId(id,PageRequest.of(page.intValue(), 1,Sort.Direction.valueOf(direction),"status_id"));
+        return repository.findTasksByProjectId(id,PageRequest.of(page.intValue(), 3,Sort.Direction.valueOf(direction),"status_id"));
+    }
+
+    @Override
+    public Page<Task> getFilteringTasksByStatus(Long page, Long id, Long statusId) {
+        return repository.findTasksByProjectIdAndStatusId(id,statusId,PageRequest.of(page.intValue(),3));
+    }
+
+    @Override
+    public Page<Task> getFilteringTasksByPriority(Long page, Long id, Long priorityId) {
+        return repository.findTasksByProjectIdAndPriorityId(id,priorityId,PageRequest.of(page.intValue(),3));
     }
 }

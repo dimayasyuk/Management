@@ -1,9 +1,9 @@
 import {Component, Input, OnInit, TemplateRef} from '@angular/core';
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
-import {Project} from "../../model/project";
 import {UserStorageService} from "../../service/user/user-storage.service";
 import {TokenStorageService} from "../../service/token/token.storage.service";
 import {Router} from "@angular/router";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -13,6 +13,8 @@ import {Router} from "@angular/router";
 export class HeaderComponent implements OnInit {
 
   public modalRef: BsModalRef;
+  @Input()
+  subscriptions: Subscription[];
 
   constructor(private router: Router, private modalService: BsModalService, private tokenStorage: TokenStorageService, private userStorage: UserStorageService) {
   }
@@ -37,6 +39,14 @@ export class HeaderComponent implements OnInit {
 
   isManager(): boolean {
     return this.userStorage.isManager();
+  }
+
+  getName(): string{
+    return this.userStorage.getAccount().name;
+  }
+
+  getSname(): string{
+    return this.userStorage.getAccount().sname;
   }
 
   isTester(): boolean {

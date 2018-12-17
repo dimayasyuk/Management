@@ -1,5 +1,5 @@
 <ng4-loading-spinner></ng4-loading-spinner>
-<app-header></app-header>
+<app-header [subscriptions]="subscriptions"></app-header>
 <div class="container-fluid body-container">
   <div class="row">
     <div class="col-sm-12">
@@ -24,14 +24,14 @@
             <button type="button" [disabled]="isDeveloper() || isTester()" class="btn btn-danger" (click)="deleteProject(project.id)">Delete</button>
           </td>
           <td>
-            <button type="button" class="btn btn-secondary" (click)="openModal(editproject,project)">Edit</button>
+            <button type="button" [disabled]="isDeveloper() || isTester()" class="btn btn-secondary" (click)="openModal(editproject,project)">Edit</button>
           </td>
         </tr>
         </tbody>
       </table>
-      <div *ngIf="totalItems" class="row">
+      <div *ngIf="totalItems > 0" class="row">
         <div class="col-xs-12 col-12">
-          <pagination [boundaryLinks]="true" [totalItems]="totalItems" [(ngModel)]="page" [itemsPerPage]="1"
+          <pagination [boundaryLinks]="true" [totalItems]="totalItems" [(ngModel)]="page" [itemsPerPage]="3"
                       (pageChanged)="pageChanged($event)"></pagination>
         </div>
       </div>

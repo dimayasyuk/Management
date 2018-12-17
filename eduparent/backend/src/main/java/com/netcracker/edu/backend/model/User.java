@@ -1,6 +1,10 @@
 package com.netcracker.edu.backend.model;
 
+import org.springframework.format.annotation.NumberFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Objects;
@@ -8,8 +12,13 @@ import java.util.Objects;
 @Entity
 public class User {
     private long id;
+    @NotNull
+    @Size(min=8, max=60)
     private String login;
+    @NotNull
+    @Size(min=8)
     private String password;
+    @NotNull
     private Role role;
 
     @Id

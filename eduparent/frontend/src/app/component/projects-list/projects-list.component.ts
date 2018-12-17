@@ -5,6 +5,8 @@ import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
 import {RoleService} from "../../service/role/role.service";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {UserStorageService} from "../../service/user/user-storage.service";
+import {Subscription} from "rxjs";
+import {RefreshService} from "../../service/refresh/refresh.service";
 
 @Component({
   selector: 'app-projects-list',
@@ -15,16 +17,23 @@ export class ProjectsListComponent implements OnInit {
 
   public projects: Project[];
   public page: number = 1;
-  public totalItems: number;
+  public totalItems: number = 0;
   public modalRef: BsModalRef;
   public editProject: Project;
+  subscriptions: Subscription[] = [];
 
   constructor(private  projectService: ProjectService, private roleService: RoleService,
-              private loadingService: Ng4LoadingSpinnerService, private modalService: BsModalService,private userStorage:UserStorageService) {
+              private loadingService: Ng4LoadingSpinnerService, private modalService: BsModalService,private userStorage:UserStorageService
+    ,private refreshService:RefreshService) {
 
   }
 
   ngOnInit() {
+    this.subscriptions.push(this.refreshService.getProjectUpdateObservable().subscribe(
+      () => {
+        this.loadCurrentProjects();
+      }
+    ));
     this.loadCurrentProjects();
   }
 
@@ -72,5 +81,9 @@ export class ProjectsListComponent implements OnInit {
 
   isDeveloper(): boolean {
     return this.userStorage.isDeveloper();
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
   }
 }

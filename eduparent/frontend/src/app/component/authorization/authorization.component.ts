@@ -19,27 +19,33 @@ export class AuthorizationComponent implements OnInit {
 
   constructor(private router: Router, private authService: AuthService,
               private token: TokenStorageService, private userService: UserService,
-              private acccountService:AccountService,private userStorage: UserStorageService,private loadingService: Ng4LoadingSpinnerService,) {
+              private acccountService: AccountService, private userStorage: UserStorageService, private loadingService: Ng4LoadingSpinnerService,) {
   }
 
   login(): void {
     this.loadingService.show();
-    this.authService.attemptAuth(this.user.login, this.user.password).subscribe(
-      data => {
-        this.token.saveToken(data.token);
-        this.userService.getUserByToken(data.token).subscribe(
-          user => {
-            this.acccountService.getAccountByUserId(user.id).subscribe(
-              account =>{
-                this.userStorage.saveUser(user,account);
-                this.router.navigate(['projects']);
-                this.loadingService.hide();
+      this.authService.attemptAuth(this.user.login, this.user.password).subscribe(
+        data => {
+          if (data) {
+            this.token.saveToken(data.token);
+            this.userService.getUserByToken(data.token).subscribe(
+              user => {
+                if (user) {
+                  this.acccountService.getAccountByUserId(user.id).subscribe(
+                    account => {
+                      if (account) {
+                        this.userStorage.saveUser(user, account);
+                        this.router.navigate(['/projects']);
+                        this.loadingService.hide();
+                      }
+                    }
+                  );
+                }
               }
             );
           }
-        );
-      }
-    );
+        }
+      );
   }
 
 

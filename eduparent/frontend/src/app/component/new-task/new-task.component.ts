@@ -13,6 +13,8 @@ import {Status} from "../../model/status";
 import {TasksComponent} from "../tasks/tasks.component";
 import {UserStorageService} from "../../service/user/user-storage.service";
 import {ProjectService} from "../../service/project/project.service";
+import {Subscription} from "rxjs";
+import {RefreshService} from "../../service/refresh/refresh.service";
 
 @Component({
   selector: 'app-new-task',
@@ -30,20 +32,28 @@ export class NewTaskComponent implements OnInit {
   public project: Project;
   public projects: Project[];
   public minDate = new Date(Date.now());
+  projectError: boolean = true;
 
   constructor(private loadingService: Ng4LoadingSpinnerService, private priorityService: PriorityService,
               private accountService: AccountService, private taskService: TaskService,
-              private statusService: StatusService, private taskComponent: TasksComponent,
-              private userStorage: UserStorageService,private projectService:ProjectService) {
+              private statusService: StatusService,
+              private userStorage: UserStorageService,private projectService:ProjectService,private refreshService:RefreshService) {
   }
+
 
   ngOnInit() {
     this.editTask = new Task();
+    this.project = new Project();
+    this.editTask.assignedId = this.userStorage.getAccount().id;
+    this.project.id = 0;
     this.loadPriorities();
     this.loadAccounts();
     this.loadStatus();
     this.loadProjects();
-    this.loadCountTasks();
+  }
+
+  resetProjectError(): void{
+    this.projectError = true;
   }
 
   closeModal(): void {
@@ -51,32 +61,34 @@ export class NewTaskComponent implements OnInit {
   }
 
   addTask(): void {
+    if(this.project.id === 0){
+      this.projectError = false;
+      return;
+    }
     this.loadingService.show();
     this.editTask.created = new Date().getTime();
     this.editTask.updated = new Date().getTime();
     this.editTask.statusId = this.statuses[0].id;
     this.editTask.projectId = this.project.id;
-    this.editTask.code = this.project.code + '';
+    this.editTask.code = this.project.code + '-';
     this.editTask.reporter = this.userStorage.getAccount();
 
-    this.taskService.saveTask(this.editTask).subscribe(
+   this.taskService.saveTask(this.editTask).subscribe(
       () => {
         this.loadingService.hide();
-        this.taskComponent.updateTasks();
+        this.refreshService.updateTasks(true);
         this.closeModal();
         this.refreshTask();
       }
-    )
+    );
   }
 
-  loadCountTasks(): void{
-  }
 
   loadPriorities(): void {
     this.priorityService.getPriorities().subscribe(
       priority => {
-        this.priorities = priority as Priority[];
-        this.editTask.priority = this.priorities[0];
+        this.priorities = priority;
+        this.editTask.priorityId = this.priorities[0].id;
       }
     );
   }
@@ -92,8 +104,8 @@ export class NewTaskComponent implements OnInit {
   loadStatus(): void {
     this.statusService.getStatuses().subscribe(
       status => {
-        this.statuses = status as Status[];
-          this.editTask.status = this.statuses[0];
+        this.statuses = status;
+          this.editTask.statusId = this.statuses[0].id;
       }
     )
   }
@@ -101,7 +113,7 @@ export class NewTaskComponent implements OnInit {
   loadAccounts(): void {
     this.accountService.getAccounts().subscribe(
       account => {
-        this.accounts = account as Account[];
+        this.accounts = account;
       }
     );
   }

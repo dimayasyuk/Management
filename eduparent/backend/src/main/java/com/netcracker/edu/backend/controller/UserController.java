@@ -1,6 +1,8 @@
 package com.netcracker.edu.backend.controller;
 
+import com.netcracker.edu.backend.model.Account;
 import com.netcracker.edu.backend.model.User;
+import com.netcracker.edu.backend.service.AccountService;
 import com.netcracker.edu.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,9 @@ public class UserController {
 
     @Autowired
     public UserController(UserService userService){
+
         this.userService = userService;
+
     }
 
     @RequestMapping(value = "/all",method = RequestMethod.GET)
@@ -33,13 +37,18 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST)
     public User saveUser(@RequestBody User user){
         if(user != null){
-            userService.saveUser(user);
+            User user1 = userService.getUserByLogin(user.getLogin());
+            if(user1 != null){
+                return null;
+            }else {
+               return userService.saveUser(user);
+            }
         }
         return null;
     }
 
 
-    @RequestMapping(value = "/login/{username}", method = RequestMethod.GET)
+    @RequestMapping(value = "login/{username}", method = RequestMethod.GET)
     public ResponseEntity<User> findByUsername(@PathVariable(name = "username") String login) {
         User user = userService.getUserByLogin(login);
         if (user != null) {

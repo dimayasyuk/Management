@@ -10,6 +10,7 @@ import {AccountService} from "../../service/account/account.service";
 import {TaskService} from "../../service/task/task.service";
 import {StatusService} from "../../service/status/status.service";
 import {TasksComponent} from "../tasks/tasks.component";
+import {RefreshService} from "../../service/refresh/refresh.service";
 
 @Component({
   selector: 'app-edit-task',
@@ -29,7 +30,7 @@ export class EditTaskComponent implements OnInit {
   public minDate = new Date(Date.now());
 
   constructor(private loadingService: Ng4LoadingSpinnerService, private priorityService: PriorityService,
-              private accountService: AccountService, private taskService: TaskService, private statusService: StatusService, private taskComponent: TasksComponent) {
+              private accountService: AccountService, private taskService: TaskService, private statusService: StatusService,private refreshService:RefreshService) {
   }
 
   ngOnInit() {
@@ -58,7 +59,7 @@ export class EditTaskComponent implements OnInit {
     this.editTask.assignee = null;
     this.taskService.saveTask(this.editTask).subscribe(
       () => {
-        this.taskComponent.updateTasks();
+        this.refreshService.updateTasks(true);
         this.closeModal();
         this.refreshTask();
       }
@@ -68,7 +69,7 @@ export class EditTaskComponent implements OnInit {
   loadPriorities(): void {
     this.priorityService.getPriorities().subscribe(
       priority => {
-        this.priorities = priority as Priority[];
+        this.priorities = priority;
       }
     );
   }
@@ -76,7 +77,7 @@ export class EditTaskComponent implements OnInit {
   loadStatus(): void {
     this.statusService.getStatuses().subscribe(
       status => {
-        this.statuses = status as Status[];
+        this.statuses = status;
       }
     )
   }
@@ -84,7 +85,7 @@ export class EditTaskComponent implements OnInit {
   loadAccounts(): void {
     this.accountService.getAccounts().subscribe(
       account => {
-        this.accounts = account as Account[];
+        this.accounts = account;
       }
     );
   }

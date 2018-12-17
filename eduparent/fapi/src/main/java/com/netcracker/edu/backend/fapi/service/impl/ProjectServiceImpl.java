@@ -52,4 +52,10 @@ public class ProjectServiceImpl implements ProjectService {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForEntity(backendUrl + "/api/projects/page/" + page,Project[].class);
     }
+
+    @Override
+    public Project getProjectByCode(String code) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(backendUrl + "/api/projects/code/" + code, Project.class);
+    }
 }

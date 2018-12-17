@@ -22,4 +22,8 @@ export class AccountService {
   getAccountByUserId(id: number): Observable<Account>{
     return this.http.get<Account>('api/accounts/' + id);
   }
+
+  getAccountByEmail(email: string): Observable<Account>{
+    return this.http.get<Account>('api/accounts/email/' + email);
+  }
 }

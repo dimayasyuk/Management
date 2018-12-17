@@ -14,20 +14,26 @@ public class UserController {
     @Autowired
     private UserService service;
 
-    @RequestMapping(value = "/all",method = RequestMethod.GET)
-    public ResponseEntity<List<User>> getAllUsers(){
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(service.getAllUsers());
     }
 
-    @RequestMapping(value = "{login}",method = RequestMethod.GET)
-    public ResponseEntity<User> getUserByLogin(@PathVariable(name = "login") String login){
+    @RequestMapping(value = "{login}", method = RequestMethod.GET)
+    public ResponseEntity<User> getUserByLogin(@PathVariable(name = "login") String login) {
         return ResponseEntity.ok(service.getUserByLogin(login));
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<User> saveAccount(@RequestBody User user){
-        if(user != null) {
-            return ResponseEntity.ok(service.saveUser(user));
+    public ResponseEntity<User> saveAccount(@RequestBody User user) {
+        if (user != null) {
+            User user1 = service.getUserByLogin(user.getLogin());
+            if (user1 != null) {
+                return null;
+            }
+            else {
+                return ResponseEntity.ok(service.saveUser(user));
+            }
         }
         return null;
     }

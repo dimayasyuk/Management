@@ -9,4 +9,5 @@ public interface AccountService {
     List<Account> getAllAccounts();
     Account saveAccount(Account account);
     Account getAccountByUserId(String id);
+    Account getAccountByEmail(String email);
 }

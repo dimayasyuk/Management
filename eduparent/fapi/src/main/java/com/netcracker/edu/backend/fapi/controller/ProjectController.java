@@ -5,6 +5,7 @@ import com.netcracker.edu.backend.fapi.model.User;
 import com.netcracker.edu.backend.fapi.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class ProjectController {
         return ResponseEntity.ok(service.getNumberOfProjects());
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_Project Manager')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Project> saveProject(@RequestBody Project project){
         if(project != null) {
@@ -44,8 +46,14 @@ public class ProjectController {
         return null;
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_Admin','ROLE_Project Manager')")
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public void deleteProject(@PathVariable String id) {
         service.deleteProject(Long.valueOf(id));
+    }
+
+    @RequestMapping(value = "code/{code}",method = RequestMethod.GET)
+    public ResponseEntity<Project> getProjectByCode(@PathVariable(name = "code") String code){
+        return ResponseEntity.ok(service.getProjectByCode(code));
     }
 }

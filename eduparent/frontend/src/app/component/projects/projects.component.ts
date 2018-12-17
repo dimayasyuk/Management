@@ -4,6 +4,7 @@ import {ProjectService} from "../../service/project/project.service";
 import {ActivatedRoute} from "@angular/router";
 import {Ng4LoadingSpinnerService} from "ng4-loading-spinner";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
+import {BsDropdownModule} from 'ngx-bootstrap';
 import {Task} from "../../model/task";
 import {Comment} from "../../model/comment";
 import {CommentService} from "../../service/comment/comment.service";
@@ -13,6 +14,9 @@ import {AttachmentService} from "../../service/attachment/attachment.service";
 import {StatusService} from "../../service/status/status.service";
 import {AccountService} from "../../service/account/account.service";
 import {UserStorageService} from "../../service/user/user-storage.service";
+import {Status} from "../../model/status";
+import {Priority} from "../../model/priority";
+import {PriorityService} from "../../service/priority/priority.service";
 
 @Component({
   selector: 'app-projects',
@@ -29,11 +33,14 @@ export class ProjectsComponent implements OnInit {
   public attachments: Attachments[];
   public accounts: Account[];
   public modalRef: BsModalRef;
+  public statuses: Status[];
+  public priorities: Priority[];
+  public editMode:boolean = false;
 
   constructor(private taskService: TaskService, private projectService: ProjectService,
-              private route: ActivatedRoute, private loadingService: Ng4LoadingSpinnerService, private statusService: StatusService,
+              private route: ActivatedRoute, private loadingService: Ng4LoadingSpinnerService,
               private modalService: BsModalService, private commentService: CommentService, private attachmentService: AttachmentService
-    , private accountService: AccountService,private userStorage:UserStorageService) {
+    , private accountService: AccountService, private userStorage: UserStorageService, private statusService: StatusService, private priorityService: PriorityService) {
   }
 
   ngOnInit() {
@@ -43,6 +50,82 @@ export class ProjectsComponent implements OnInit {
     this.loadComments(id);
     this.loadTaskById(id);
     this.loadAttachments(id);
+    this.loadPriorities();
+    this.loadStatuses();
+  }
+
+  loadStatuses(): void {
+    this.statusService.getStatuses().subscribe(
+      status => {
+        this.statuses = status;
+      }
+    )
+  }
+
+  save(): void{
+    this.loadingService.show();
+    this.taskService.saveTask(this.editTask).subscribe(
+      task =>{
+        this.editMode = false;
+        this.editTask = task;
+        this.loadingService.hide();
+      }
+    )
+  }
+
+  edit(): void{
+    this.editMode = true;
+  }
+
+  loadPriorities(): void {
+    this.priorityService.getPriorities().subscribe(
+      priority => {
+        this.priorities = priority;
+      }
+    );
+  }
+
+  reOpen(): void {
+    if (this.editTask.status.name === 'Ready for Test') {
+      console.log(this.editTask);
+      this.updateStatus('Open');
+    }
+  }
+
+  close(): void {
+    if (this.editTask.status.name === 'Ready for Test') {
+      console.log(this.editTask);
+      this.editTask.closed = new Date().getTime();
+      this.updateStatus('Closed');
+    }
+  }
+
+  updateStatus(status: string): void {
+    this.loadingService.show();
+    this.statusService.getStatusByName(status).subscribe(
+      stat => {
+        this.editTask.statusId = stat.id;
+        this.taskService.saveTask(this.editTask).subscribe(
+          (tsk) => {
+            this.editTask = tsk;
+            this.loadingService.hide();
+          }
+        )
+      }
+    )
+  }
+
+  start(): void {
+    if (this.editTask.status.name === 'Open') {
+      this.editTask.assignedId = this.userStorage.getAccount().id;
+      this.updateStatus('In Progress');
+    }
+  }
+
+  ready(): void {
+    if (this.editTask.status.name === 'In Progress') {
+      this.updateStatus('Ready for Test');
+    }
   }
 
   loadTaskById(id: number): void {
@@ -148,23 +231,6 @@ export class ProjectsComponent implements OnInit {
     )
   }
 
-  updateStatusTask(statusName: string): void {
-    this.statusService.getStatusByName(statusName).subscribe(
-      status => {
-        this.editTask.statusId = status.id;
-        this.taskService.saveTask(this.editTask).subscribe(
-          () => {
-            this.taskService.getTaskById(this.editTask.id).subscribe(
-              task => {
-                this.editTask = task;
-              }
-            )
-          }
-        );
-      }
-    )
-  }
-
   closeModal(): void {
     this.modalRef.hide();
   }
@@ -182,5 +248,21 @@ export class ProjectsComponent implements OnInit {
         this.closeModal();
       }
     )
+  }
+
+  isTester(): boolean {
+    return this.userStorage.isTester();
+  }
+
+  isDeveloper(): boolean {
+    return this.userStorage.isDeveloper();
+  }
+
+  isManager(): boolean {
+    return this.userStorage.isManager();
+  }
+
+  isAdmin(): boolean {
+    return this.userStorage.isAdmin();
   }
 }

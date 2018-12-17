@@ -33,4 +33,10 @@ public class AccountServiceImpl implements AccountService {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(backendUrl + "/api/accounts/" + id,Account.class);
     }
+
+    @Override
+    public Account getAccountByEmail(String email) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForObject(backendUrl + "/api/accounts/email/" + email,Account.class);
+    }
 }

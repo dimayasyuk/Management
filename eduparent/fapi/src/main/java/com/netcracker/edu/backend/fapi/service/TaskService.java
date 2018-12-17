@@ -7,11 +7,22 @@ import java.util.List;
 
 public interface TaskService {
     List<Task> getAllTasks();
+
     List<Task> getAllTasksByProject(Long projectId);
+
     Task getTaskById(Long taskId);
+
     Task saveTask(Task task);
+
     void deleteTask(Long id);
-    ResponseEntity getCurrentTasks(Long page,Long id);
-    ResponseEntity getSortingTasksByPriotity(Long page,Long id,String direction);
-    ResponseEntity getSortingTasksByStatus(Long page,Long id,String direction);
+
+    ResponseEntity getCurrentTasks(Long page, Long id);
+
+    ResponseEntity getSortingTasksByPriotity(Long page, Long id, String direction);
+
+    ResponseEntity getSortingTasksByStatus(Long page, Long id, String direction);
+
+    ResponseEntity getFilteringTasksByStatus(String page, String id, String status);
+
+    ResponseEntity getFilteringTasksByPriority(String page, String id, String priority);
 }

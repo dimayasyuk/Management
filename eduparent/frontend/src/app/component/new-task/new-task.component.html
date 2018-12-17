@@ -4,20 +4,23 @@
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
+
+
 <div class="modal-body">
 
   <div class="form-group">
     <label>Project</label>
     <div>
-      <select class="form-control" [(ngModel)]="project">
+      <select class="form-control" name="proj" (change)="resetProjectError()" [(ngModel)]="project" #proj="ngModel">
         <option *ngFor="let key of projects" [ngValue]="key">{{ key.code }}</option>
       </select>
+      <div [hidden]="projectError">Set project</div>
     </div>
   </div>
 
   <div class="form-group">
     <label>Due Date</label>
-    <input class="form-control"
+    <input type="date" class="form-control"
            #dpYMD="bsDatepicker"
            bsDatepicker
            [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD' }"
@@ -30,20 +33,18 @@
 
   <div class="form-group">
     <label>Estimation</label>
-    <input class="form-control" name="estimation" [(ngModel)]="editTask.estimation" #estimation="ngModel"
-           required/>
-    <div [hidden]="estimation.valid || estimation.untouched" class="alert alert-danger">
-      Uncorrect estimation
-    </div>
+    <input type="number" min="1" class="form-control" name="estimation" [(ngModel)]="editTask.estimation" #estimation="ngModel"
+           tooltip="Estimation should include less than 5 characters."
+           placement="top"
+           required pattern="[1-9]{1}[0-9]{0,4}"/>
   </div>
 
   <div class="form-group">
     <label>Description</label>
     <input class="form-control" name="description" [(ngModel)]="editTask.description" #description="ngModel"
-           required/>
-    <div [hidden]="description.valid || description.untouched" class="alert alert-danger">
-      Please, set description
-    </div>
+           tooltip="Description should include less than 45 symbols."
+           placement="top"
+           required pattern="(.){1,45}"/>
   </div>
 
   <div class="form-group">
@@ -63,7 +64,12 @@
   </div>
 
 </div>
+
 <div class="modal-footer">
-  <button type="button" class="btn btn-success" (click)="addTask()">Create</button>
+  <button type="button" class="btn btn-success"
+          [disabled]="!duedate.valid || duedate.untouched ||
+           !description.valid || description.untouched ||
+           !estimation.valid || estimation.untouched"
+          (click)="addTask()">Create</button>
   <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
 </div>

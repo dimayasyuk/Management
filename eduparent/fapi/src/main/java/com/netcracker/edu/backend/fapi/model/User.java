@@ -2,30 +2,28 @@ package com.netcracker.edu.backend.fapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
     private long id;
+    @NotNull
+    @Size(min=8, max=16)
     private String login;
+    @NotNull
+    @Size(min=8,max = 60)
     private String password;
+    @NotNull
     private Role role;
-    private Account account;
 
     public User(){}
 
-    public User( long id,String login,String password,Role role,Account account){
+    public User( long id,String login,String password,Role role){
         this.id = id;
         this.login = login;
         this.password = password;
         this.role = role;
-        this.account = account;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     public long getId() {

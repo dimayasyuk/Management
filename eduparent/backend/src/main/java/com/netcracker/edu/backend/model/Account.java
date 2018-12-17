@@ -1,14 +1,22 @@
 package com.netcracker.edu.backend.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
 public class Account {
     private long id;
+    @NotNull
+    @Size(min=2, max=45)
     private String name;
+    @NotNull
+    @Size(min=2, max=45)
     private String sname;
+    @Email
     private String email;
     private Long userId;
 

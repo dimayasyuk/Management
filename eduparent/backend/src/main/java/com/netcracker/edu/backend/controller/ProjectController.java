@@ -19,36 +19,42 @@ public class ProjectController {
     private ProjectService service;
 
     @Autowired
-    public ProjectController(ProjectService service){
+    public ProjectController(ProjectService service) {
         this.service = service;
     }
 
-    @RequestMapping(value = "/all",method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public Iterable<Project> findAll() {
         return service.getAllProjects();
     }
 
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Project findProjectById(@PathVariable(name = "id") Long id) {
         return service.findProjectById(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public Project saveProject(@RequestBody Project project){
-        if(project != null){
+    public Project saveProject(@RequestBody Project project) {
+        if (project != null) {
             service.saveProject(project);
         }
         return null;
     }
+
+    @RequestMapping(value = "code/{code}",method = RequestMethod.GET)
+    public Project findProjectByCode(@PathVariable(name = "code") String code) {
+        return service.findProjectByCode(code);
+    }
+
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public ResponseEntity deleteProject(@PathVariable(name = "id") Long id) {
         service.deleteProject(id);
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(value = "/page/{page}",method = RequestMethod.GET)
-    public ResponseEntity getCurrentProjects(@PathVariable(name = "page") String page){
+    @RequestMapping(value = "/page/{page}", method = RequestMethod.GET)
+    public ResponseEntity getCurrentProjects(@PathVariable(name = "page") String page) {
         Page p = service.getCurrentProjects(Long.valueOf(page));
         List<Project> projects = p.getContent();
         return ResponseEntity.ok()
@@ -56,8 +62,8 @@ public class ProjectController {
                 .body(projects);
     }
 
-    @RequestMapping(value = "/number",method = RequestMethod.GET)
-    public Long getNumberOfProjects(){
+    @RequestMapping(value = "/number", method = RequestMethod.GET)
+    public Long getNumberOfProjects() {
         return service.getNumberOfProjects();
     }
 }

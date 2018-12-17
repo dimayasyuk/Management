@@ -23,11 +23,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByLogin(String login) {
-        return repository.findUserByLogin(login);
+        return  repository.findUserByLogin(login);
     }
 
     @Override
     public User saveUser(User user) {
-        return repository.save(user);
+        User user1 = repository.save(user);
+        user1.setPassword(null);
+        return user1;
     }
 }

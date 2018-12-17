@@ -1,5 +1,5 @@
 <ng4-loading-spinner></ng4-loading-spinner>
-<app-header [project]="project"></app-header>
+<app-header [subscriptions]="subscriptions"></app-header>
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-12">
@@ -12,13 +12,14 @@
         <thead>
         <tr>
           <th scope="col">Task Code</th>
-          <th scope="col"><a class="t-link" (click)="$event.preventDefault(); sortByPriority(true)" href="#">Priority</a>
-            <button class="but">
+          <th scope="col"><a class="t-link" (click)="$event.preventDefault(); sortByPriority(true)"
+                             href="#">Priority</a>
+            <button class="but" (click)="openModal(filtrpriority)">
               <img src="./assets/filtr.png" class="img" alt="" style="vertical-align:middle">
             </button>
           </th>
           <th scope="col"><a class="t-link" (click)="$event.preventDefault(); sortByStatus(true)" href="#">Status</a>
-            <button class="but">
+            <button class="but" (click)="openModal(filtrstatus)">
               <img src="./assets/filtr.png" class="img" alt="" style="vertical-align:middle">
             </button>
           </th>
@@ -47,22 +48,64 @@
           <td>{{task.assignee.name}} {{task.assignee.sname}}</td>
           <td>{{task.description}}</td>
           <td>
-            <button type="button" class="btn btn-danger" (click)="deleteTask(task.id)">Delete</button>
+            <button type="button" [disabled]="isDeveloper() || isTester()" class="btn btn-danger"
+                    (click)="deleteTask(task.id)">Delete
+            </button>
           </td>
           <td>
-            <button type="button" class="btn btn-secondary" (click)="openModal(newtask,task)">Edit</button>
+            <button type="button" [disabled]="isDeveloper() || isTester()" class="btn btn-secondary"
+                    (click)="openModal(edittask,task)">Edit
+            </button>
           </td>
         </tbody>
       </table>
-      <div *ngIf="totalItems" class="row">
+      <div *ngIf="totalItems > 0" class="row">
         <div class="col-xs-12 col-12">
-          <pagination [boundaryLinks]="true" [totalItems]="totalItems" [(ngModel)]="page" [itemsPerPage]="1"
+          <pagination [boundaryLinks]="true" [totalItems]="totalItems" [(ngModel)]="page" [itemsPerPage]="3"
                       (pageChanged)="pageChanged($event)"></pagination>
         </div>
       </div>
     </div>
   </div>
 </div>
-<ng-template #newtask>
+<ng-template #edittask>
   <app-edit-task [id]="editTask.id" [modalRef]="modalRef"></app-edit-task>
+</ng-template>
+
+<ng-template #filtrstatus>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-sizes-name2" class="modal-title pull-left">Status</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <select class="form-control" [(ngModel)]="status">
+          <option *ngFor="let key of statuses" [ngValue]="key">{{key.name}}</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="filterByStatus()">Filter</button>
+      </div>
+  </div>
+</ng-template>
+
+<ng-template #filtrpriority>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="dialog-priority" class="modal-title pull-left">Priority</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <select class="form-control" [(ngModel)]="priority">
+          <option *ngFor="let key of priorities" [ngValue]="key">{{key.name}}</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="filterByPriority()">Filter</button>
+      </div>
+    </div>
 </ng-template>

@@ -2,10 +2,12 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
 import {ModalModule} from 'ngx-bootstrap/modal';
-import {BsDropdownModule} from 'ngx-bootstrap/dropdown';
+import {BsDropdownModule} from 'ngx-bootstrap';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PaginationModule } from 'ngx-bootstrap';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 
 import {AppComponent} from './app.component';
 import {TasksComponent} from './component/tasks/tasks.component';
@@ -58,8 +60,10 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(routes),
+    TooltipModule.forRoot(),
     PaginationModule.forRoot(),
     Ng4LoadingSpinnerModule.forRoot(),
+    PopoverModule.forRoot(),
     ModalModule.forRoot(),
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),

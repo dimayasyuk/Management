@@ -40,7 +40,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task saveTask(Task task) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForEntity(backendUrl + "/api/tasks",task, Task.class).getBody();
+        return restTemplate.postForEntity(backendUrl + "/api/tasks", task, Task.class).getBody();
     }
 
     @Override
@@ -52,18 +52,30 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public ResponseEntity getCurrentTasks(Long page, Long id) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForEntity(backendUrl + "/api/tasks/page/" + page + "/id/" + id,Task[].class);
+        return restTemplate.getForEntity(backendUrl + "/api/tasks/page/" + page + "/id/" + id, Task[].class);
     }
 
     @Override
     public ResponseEntity getSortingTasksByPriotity(Long page, Long id, String direction) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForEntity(backendUrl + "/api/tasks/page/" + page + "/priority" + "/id/" + id + "/direction/" + direction,Task[].class);
+        return restTemplate.getForEntity(backendUrl + "/api/tasks/page/" + page + "/priority" + "/id/" + id + "/direction/" + direction, Task[].class);
     }
 
     @Override
-    public ResponseEntity getSortingTasksByStatus(Long page, Long id,String direction) {
+    public ResponseEntity getSortingTasksByStatus(Long page, Long id, String direction) {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForEntity(backendUrl + "/api/tasks/page/" + page + "/status" + "/id/" + id + "/direction/" + direction,Task[].class);
+        return restTemplate.getForEntity(backendUrl + "/api/tasks/page/" + page + "/status" + "/id/" + id + "/direction/" + direction, Task[].class);
+    }
+
+    @Override
+    public ResponseEntity getFilteringTasksByStatus(String page, String id, String status) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForEntity(backendUrl + "/api/tasks/page/" + page + "/id/" + id + "/status/" + status, Task[].class);
+    }
+
+    @Override
+    public ResponseEntity getFilteringTasksByPriority(String page, String id, String priority) {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate.getForEntity(backendUrl + "/api/tasks/page/" + page + "/id/" + id + "/priority/" + priority, Task[].class);
     }
 }

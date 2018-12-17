@@ -34,4 +34,8 @@ public class AccountController {
         return ResponseEntity.ok(service.getAccountByUserId(id));
     }
 
+    @RequestMapping(value = "/email/{email}",method = RequestMethod.GET)
+    public ResponseEntity<Account> getAccountByEmail(@PathVariable(name = "email") String email){
+        return ResponseEntity.ok(service.getAccountByEmail(email));
+    }
 }

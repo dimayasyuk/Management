@@ -1,0 +1,7 @@
+.err{
+  font-size: small;
+}
+:host >>> .tooltip-inner {
+  background-color: lightcoral;
+  color: white;
+}

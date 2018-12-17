@@ -33,4 +33,9 @@ public class AccountController {
     public Account findAccountByUser(@PathVariable(name = "id") String id) {
         return service.findAccountByUser(Long.valueOf(id));
     }
+
+    @RequestMapping(value = "/email/{email}",method = RequestMethod.GET)
+    public Account findAccountByEmail(@PathVariable(name = "email") String email) {
+        return service.findAccountByEmail(email);
+    }
 }

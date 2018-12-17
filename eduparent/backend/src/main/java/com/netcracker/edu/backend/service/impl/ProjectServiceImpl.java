@@ -42,11 +42,16 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Page<Project> getCurrentProjects(Long page) {
-       return repository.findAll(PageRequest.of(page.intValue(), 1));
+       return repository.findAll(PageRequest.of(page.intValue(), 3));
     }
 
     @Override
     public Long getNumberOfProjects() {
         return repository.count();
+    }
+
+    @Override
+    public Project findProjectByCode(String code) {
+        return repository.findProjectByCode(code);
     }
 }

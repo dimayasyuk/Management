@@ -1,23 +1,34 @@
-<div class="modal-header" *ngIf="editProject">
-  <h4 class="modal-title pull-left">Edit Project</h4>
-  <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div class="modal-body" *ngIf="editProject">
-  <div class="form-group">
-    <label>Code</label>
-    <input class="form-control" name="code" [(ngModel)]="editProject.code" #code="ngModel" required/>
-    <div [hidden]="code.valid || code.untouched" class="alert alert-danger">Please set projectcode</div>
+<div *ngIf="editProject">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Create new Project</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-  <div class="form-group">
-    <label>Description</label>
-    <input class="form-control" name="description" [(ngModel)]="editProject.description" #description="ngModel"
-           required/>
-    <div [hidden]="description.valid || description.untouched" class="alert alert-danger"></div>
+
+  <div class="modal-body">
+    <div class="form-group">
+      <label>Code</label>
+      <input class="form-control" (change)="resetErrorCode()" name="code" [(ngModel)]="editProject.code" #code="ngModel"
+             tooltip="Code should include 1-40 symbols"
+             placement="top"
+             required pattern="(.){1,40}"/>
+      <div [hidden]="!errorCode" class="alert alert-danger">project exist with this code</div>
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <input class="form-control" name="description" [(ngModel)]="editProject.description" #description="ngModel"
+             tooltip="Description should include 1-45 symbols"
+             placement="top"
+             required pattern="(.){1,45}"/>
+    </div>
   </div>
-</div>
-<div class="modal-footer" *ngIf="editProject">
-  <button type="button" class="btn btn-success" (click)="updateProject()">Edit</button>
-  <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success"
+            [disabled]="!code.valid || code.untouched || !description.valid || description.untouched"
+            (click)="updateProject()">Edit
+    </button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal()">Close</button>
+  </div>
 </div>

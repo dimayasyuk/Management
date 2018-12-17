@@ -1,6 +1,7 @@
 package com.netcracker.edu.backend.fapi.controller;
 
 
+import com.netcracker.edu.backend.fapi.model.Status;
 import com.netcracker.edu.backend.fapi.model.Task;
 import com.netcracker.edu.backend.fapi.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,44 +23,56 @@ public class TaskController {
         return ResponseEntity.ok(service.getAllTasks());
     }
 
-    @RequestMapping(value = "{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public ResponseEntity<List<Task>> getAllTasksByProject(@PathVariable(name = "id") Long projectId) {
         return ResponseEntity.ok(service.getAllTasksByProject(projectId));
     }
 
-    @RequestMapping(value = "/id/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/id/{id}", method = RequestMethod.GET)
     public ResponseEntity<Task> getTaskById(@PathVariable(name = "id") Long taskId) {
         return ResponseEntity.ok(service.getTaskById(taskId));
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Task> saveTask(@RequestBody Task task){
-        if(task != null) {
+    public ResponseEntity<Task> saveTask(@RequestBody Task task) {
+        if (task != null) {
             return ResponseEntity.ok(service.saveTask(task));
         }
         return null;
     }
 
-    @PreAuthorize("hasAnyRole()")
+    @PreAuthorize("hasAnyRole('ROLE_Admin','ROLE_Project Manager')")
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public void deleteTask(@PathVariable String id) {
         service.deleteTask(Long.valueOf(id));
     }
 
-    @RequestMapping(value = "/page/{page}/id/{id}",method = RequestMethod.GET)
-    public ResponseEntity getCurrentTasks(@PathVariable(name = "page") String page,@PathVariable(name = "id") String id){
-        return ResponseEntity.ok(service.getCurrentTasks(Long.valueOf(page),Long.valueOf(id)));
+    @RequestMapping(value = "/page/{page}/id/{id}", method = RequestMethod.GET)
+    public ResponseEntity getCurrentTasks(@PathVariable(name = "page") String page, @PathVariable(name = "id") String id) {
+        return ResponseEntity.ok(service.getCurrentTasks(Long.valueOf(page), Long.valueOf(id)));
     }
 
-    @RequestMapping(value = "/page/{page}/priority/id/{id}/direction/{direction}",method = RequestMethod.GET)
+    @RequestMapping(value = "/page/{page}/priority/id/{id}/direction/{direction}", method = RequestMethod.GET)
     public ResponseEntity getSortingTasksByPriotity(@PathVariable(name = "page") String page,
-                                                    @PathVariable(name = "id") String id,@PathVariable(name = "direction") String direction){
-        return ResponseEntity.ok(service.getSortingTasksByPriotity(Long.valueOf(page),Long.valueOf(id), direction));
+                                                    @PathVariable(name = "id") String id, @PathVariable(name = "direction") String direction) {
+        return ResponseEntity.ok(service.getSortingTasksByPriotity(Long.valueOf(page), Long.valueOf(id), direction));
     }
 
-    @RequestMapping(value = "/page/{page}/status/id/{id}/direction/{direction}",method = RequestMethod.GET)
-    public ResponseEntity getSortingTasksByStatus(@PathVariable(name = "page") String page,@PathVariable(name = "id") String id,
-                                                  @PathVariable(name = "direction") String direction){
-        return ResponseEntity.ok(service.getSortingTasksByStatus(Long.valueOf(page),Long.valueOf(id),direction));
+    @RequestMapping(value = "/page/{page}/status/id/{id}/direction/{direction}", method = RequestMethod.GET)
+    public ResponseEntity getSortingTasksByStatus(@PathVariable(name = "page") String page, @PathVariable(name = "id") String id,
+                                                  @PathVariable(name = "direction") String direction) {
+        return ResponseEntity.ok(service.getSortingTasksByStatus(Long.valueOf(page), Long.valueOf(id), direction));
+    }
+
+    @RequestMapping(value = "/page/{page}/id/{id}/status/{status}", method = RequestMethod.GET)
+    public ResponseEntity getFilteringTasksByStatus(@PathVariable(name = "page") String page, @PathVariable(name = "id") String id,
+                                                    @PathVariable(name = "status") String status) {
+        return ResponseEntity.ok(service.getFilteringTasksByStatus(page, id, status));
+    }
+
+    @RequestMapping(value = "/page/{page}/id/{id}/priority/{priority}", method = RequestMethod.GET)
+    public ResponseEntity getFilteringTasksByPriority(@PathVariable(name = "page") String page, @PathVariable(name = "id") String id,
+                                                      @PathVariable(name = "priority") String priority) {
+        return ResponseEntity.ok(service.getFilteringTasksByPriority(page, id, priority));
     }
 }

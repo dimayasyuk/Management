@@ -1,27 +1,49 @@
 package com.netcracker.edu.backend.fapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.sql.Date;
 import java.sql.Timestamp;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Task {
     private long id;
+    @NotNull
+    @Size(max=45)
     private String code;
+    @NotNull
+    @DateTimeFormat
     private Date created;
-    private Date updated;
+    @DateTimeFormat
     private Date closed;
+    @NotNull
+    @DateTimeFormat
+    private Date updated;
+    @NotNull
+    @DateTimeFormat
     private Date dueDate;
+    @NotNull
+    @Digits(integer=3, fraction=0)
     private Integer estimation;
+    @NotNull
+    @Size(max=45)
     private String description;
-    private Account assignee;
+    @NotNull
     private Account reporter;
-    private Status status;
+    @NotNull
     private long priorityId;
-    private long assignedId;
-    private long statusId;
     private Priority priority;
+    @NotNull
+    private long statusId;
+    private Status status;
+    @NotNull
+    private long assignedId;
+    private Account assignee;
+    @NotNull
     private Long projectId;
 
     public Task(){}

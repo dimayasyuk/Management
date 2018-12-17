@@ -2,11 +2,20 @@ package com.netcracker.edu.backend.fapi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Account {
     private int id;
+    @NotNull
+    @Size(min=2, max=45)
     private String name;
+    @NotNull
+    @Size(min=2, max=45)
     private String sname;
+    @Email
     private String email;
     private int userId;
 

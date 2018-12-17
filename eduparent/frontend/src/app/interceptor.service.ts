@@ -32,10 +32,9 @@ export class InterceptorService implements HttpInterceptor {
     return next.handle(authReq).pipe(tap(() => {},
       (err: any) => {
         if (err instanceof HttpErrorResponse) {
-          console.log(err);
-          console.log('req url :: ' + req.url);
           if (err.status === 401) {
-            this.router.navigate(['/']);
+            this.router.navigate(['/authorization']);
+            alert('Unauthorizated');
           }
         }
       }

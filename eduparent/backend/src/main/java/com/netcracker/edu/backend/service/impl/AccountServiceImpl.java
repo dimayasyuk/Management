@@ -29,4 +29,9 @@ public class AccountServiceImpl implements AccountService {
     public Account findAccountByUser(Long id) {
         return repository.findAccountsByUserId(id);
     }
+
+    @Override
+    public Account findAccountByEmail(String email) {
+        return repository.findAccountByEmail(email);
+    }
 }

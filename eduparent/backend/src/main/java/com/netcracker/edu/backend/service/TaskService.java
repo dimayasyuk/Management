@@ -11,5 +11,8 @@ public interface TaskService {
     Page<Task> getCurrentTasks(Long page,Long id);
     Page<Task> getSortingTasksByPriority(Long page,Long id,String direction);
     Page<Task> getSortingTasksByStatus(Long page,Long id,String direction);
+    Page<Task> getFilteringTasksByStatus(Long page,Long id,Long statusId);
+    Page<Task> getFilteringTasksByPriority(Long page,Long id,Long priorityId);
+    Task findTopByOrderByIdDesc();
     void deleteTask(Long id);
 }
